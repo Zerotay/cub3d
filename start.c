@@ -18,6 +18,8 @@ int CheckValid(char *gv)
 
 int main(int gc, char **gv)
 {
+	t_map map;
+
 	if (gc == 3 && !ft_strncmp(gv[2], "--save", 6))
 	{
 		printf("wait for making\n");
@@ -30,7 +32,7 @@ int main(int gc, char **gv)
 	}
 	else
 	{
-		printf("Working well!!\n");
+		parse(gv[1], map);
 	}
 	return (0);
 }

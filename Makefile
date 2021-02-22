@@ -15,8 +15,8 @@ all: $(NAME)
 # 	./cub3d
 
 $(NAME) :
-	gcc ./*.c ./get_next_line/*.c -lft -L. -I./libft -I./get_next_line -I.
-	./a.out tesasdt.cub
+	gcc ./*.c ./get_next_line/*.c -L. -lft -I./libft -I./get_next_line -I.
+	./a.out ./test.cub
 	rm a.out
 
 
