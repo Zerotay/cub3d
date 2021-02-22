@@ -9,10 +9,16 @@ SRCS = start.c
 
 all: $(NAME)
 
+# $(NAME) :
+# 	# gcc $(DY) start.c -o $@
+# 	gcc start.c -L. -lmlx -framework OpenGL -framework AppKit -lz -o $@
+# 	./cub3d
+
 $(NAME) :
-	# gcc $(DY) start.c -o $@
-	gcc start.c -L. -lmlx -framework OpenGL -framework AppKit -lz -o $@
-	./cub3d
+	gcc ./*.c ./get_next_line/*.c -lft -L. -I./libft -I./get_next_line -I.
+	./a.out tesasdt.cub
+	rm a.out
+
 
 clean:
 	rm -rf $(NAME)
