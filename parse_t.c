@@ -21,6 +21,7 @@ t_map   check_type(t_map map, char *line)
 	if (line[0] == '\0')
 		return (map);
 	free_error(map);
+	return (map);
 }
 
 t_map	parse_type(t_map map, int fd)

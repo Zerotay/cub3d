@@ -47,6 +47,7 @@ int save_color(char *line, int *i, int *tmp, int *var)
 	}
 	return (check);
 }
+
 t_map	fill_f(t_map map, char *line)
 {
 	int	i;

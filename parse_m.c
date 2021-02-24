@@ -6,21 +6,22 @@ t_map	make_list(t_map map, int fd)
 	char	*line;
 	int		ret;
 
-	while (get_next_line(fd, &line))
+	ret = get_next_line(fd, &line);
+	while (ret > 0)
 	{
-		ret = get_next_line(fd, &line);
 		tmp = ft_lstnew(line);
-		if (!tmp || ret < 0)
+		if (!tmp)
 			free_error(map);
 		ft_lstadd_back(&map.map, tmp);
 		if (!ft_strset(line, "102 NEWS"))
 			free_error(map);
+		ret = get_next_line(fd, &line);
 	}
 	tmp = ft_lstnew(line);
-	if (!tmp || ret < 0)
+	if (!tmp)
 		free_error(map);
 	ft_lstadd_back(&map.map, tmp);
-	if (!ft_strset(line, "102 NEWS"))
+	if (!ft_strset(line, "102 NEWS") || ret < 0)
 		free_error(map);
 	return(map);
 }
@@ -31,9 +32,9 @@ void	error_if_invalid(t_map map, int i, t_list *tmp)
 		free_error(map);
 	if (!i || *(CURR + i - 1) == ' ' || !*(CURR + i + 1) || *(CURR + i + 1) == ' ')
 		free_error(map);
-	if (ft_strlen(PREV) < i + 1 || *(PREV + i) == ' ')
+	if ((int)ft_strlen(PREV) < i + 1 || *(PREV + i) == ' ')
 		free_error(map);
-	if (ft_strlen(NEXT) < i + 1 || *(NEXT + i) == ' ')
+	if ((int)ft_strlen(NEXT) < i + 1 || *(NEXT + i) == ' ')
 		free_error(map);
 }
 
@@ -53,7 +54,7 @@ t_map	check_map_valid(t_map map, int i, t_list *tmp)
 	return (map);
 }
 
-void	parse_map(t_map map)
+t_map	parse_map(t_map map)
 {
 	int		i;
 	t_list	*tmp;
@@ -68,4 +69,5 @@ void	parse_map(t_map map)
 	}
 	if (!map.m_flag)
 		free_error(map);
+	return (map);
 }

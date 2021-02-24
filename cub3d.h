@@ -33,13 +33,10 @@ typedef struct  s_map
 	char *i_s;
 	int c_floor;
 	int c_ceiling;
-
 	char m_flag;
 	t_list	*map;
 	int position_x;
 	t_list	*position_y;
-
-	char err;
 }               t_map;
 
 void	free_all(t_map map);
@@ -58,6 +55,6 @@ t_map	fill_c(t_map map, char *line);
 int		free_error(t_map map);
 t_map	check_map_valid(t_map map, int i, t_list *tmp);
 t_map	make_list(t_map map, int fd);
-void	parse_map(t_map map);
+t_map	parse_map(t_map map);
 
 #endif
