@@ -15,9 +15,13 @@ all: $(NAME)
 # 	./cub3d
 
 $(NAME) :
-	gcc ./*.c ./get_next_line/*.c -L. -lft -I./libft -I./get_next_line -I.
+	# make bonus -C ./libft
+	# cp ./libft/libft.a .
+	# make fclean -C ./libft
+	gcc ./*.c ./get_next_line/*.c -L. -lft -I./libft -I./get_next_line -I. -fsanitize=address
 	./a.out ./test.cub
 	rm a.out
+	# rm libft.a
 
 
 clean:

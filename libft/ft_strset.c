@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_strset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dongguki <dongguki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/22 18:08:12 by dongguki          #+#    #+#             */
-/*   Updated: 2021/02/23 20:56:34 by dongguki         ###   ########.fr       */
+/*   Created: 2021/02/24 10:09:29 by dongguki          #+#    #+#             */
+/*   Updated: 2021/02/24 10:41:42 by dongguki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_strset(char *s, char *set)
 {
-	t_list *curr;
+	int	i;
+	int	j;
 
-	if (!new || !lst)
-		return ;
-	if (!*lst)
+	if (!s || !set)
+		return (-1);
+	i = 0;
+	while (s[i])
 	{
-		*lst = new;
-		return ;
+		j = -1;
+		while (set[++j])
+			if (s[i] == set[j])
+				break ;
+		if (!set[j])
+			return (0);
+		i++;
 	}
-	curr = ft_lstlast(*lst);
-	new->prev = curr;
-	curr->next = new;
+	return (1);
 }

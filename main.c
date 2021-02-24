@@ -1,19 +1,25 @@
 #include "cub3d.h"
 
-int CheckValid(char *gv)
+void display(void)
 {
-	int		i;
-	char	*cub;
+	return ;
+}
 
-	i = ft_strlen(gv);
-	cub = ".cub";
-	i -= 4;
-	if (i <= 0)
-		return (0);
-	while (gv[i])
-		if (*cub++ != gv[i++])
-			return (0);
-	return (1);
+void	free_all(t_map map)
+{
+	if (map.i_so)
+		free(map.i_so);
+	if (map.i_no)
+		free(map.i_no);
+	if (map.i_we)
+		free(map.i_we);
+	if (map.i_ea)
+		free(map.i_ea);
+	if (map.i_s)
+		free(map.i_s);
+	if (map.map)
+		ft_lstclear(&map.map, free);
+	exit(0);
 }
 
 int main(int gc, char **gv)
@@ -32,7 +38,9 @@ int main(int gc, char **gv)
 	}
 	else
 	{
-		parse(gv[1], map);
+		map = parse(gv[1], map);
+		display();
+		free_all(map);
 	}
 	return (0);
 }
