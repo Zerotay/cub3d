@@ -18,9 +18,11 @@ $(NAME) :
 	# make bonus -C ./libft
 	# cp ./libft/libft.a .
 	# make fclean -C ./libft
-	gcc ./*.c ./get_next_line/*.c -L. -lft -I./libft -I./get_next_line -I. -fsanitize=address
-	./a.out ./test.cub
-	rm a.out
+	gcc ./*.c ./get_next_line/*.c -o $@ \
+	-L. -lft -I./libft -I./get_next_line -I. -lm \
+	-L. -lmlx -framework OpenGL -framework AppKit -lz -fsanitize=address
+	./cub3d ./test.cub
+	rm cub3d
 	# rm libft.a
 
 
