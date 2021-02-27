@@ -89,10 +89,18 @@
    \ C | B / 
     \  |  /  
  D   \ | /   A
-  -----------
+  -----------       X
  E   / | \   H
     /  |  \  
    / F | G \	
+
+       |
+   B   |   A
+	   |
+---------------    O
+       |
+   C   |   D
+	   |
 */
 
 typedef struct  s_map
@@ -144,6 +152,8 @@ typedef struct	s_cub
 	double	direction;
 	double	real_x;
 	double	real_y;
+	double	wall_x;
+	double	wall_y;
 }				t_cub;
 
 void	free_all(t_map map);
