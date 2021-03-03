@@ -33,6 +33,7 @@ int main(int gc, char **gv)
 	else
 	{
 		map = parse(gv[1], map);
+		printf("%c\n", map.m_flag); //이거 값부터 이상하게 들어가고 있다.
 		display(map);
 		free_all(map);
 	}
