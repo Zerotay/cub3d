@@ -11,12 +11,6 @@ t_cub   cub_init(t_cub cub)
 	cub.img_so.img = 0;
 	cub.real_x = 0.5;
 	cub.real_y = 0.5;
-	// cub.spr = (t_list *)malloc(sizeof(t_list));
-	// if (!cub.spr)
-	// 	free_error(cub.map);
-	// cub.spr->content = 0;
-	// cub.spr->next = 0;
-	// cub.spr->prev = 0;
 	return (cub);
 }
 
@@ -82,26 +76,26 @@ t_cub move_forward(t_cub cub)
 		cub.real_x += 0.05 * cos(cub.direction);
 	if (!is_ycollission(cub, cub.real_y + 0.05 * sin(cub.direction)))
 		cub.real_y += 0.05 * sin(cub.direction);
-		if (cub.real_x >= 1)
-		{
-			cub.real_x -= 1;
-			cub.map.position_x++;
-		}
-		else if (cub.real_x < 0)
-		{
-			cub.real_x += 1;
-			cub.map.position_x--;
-		}
-		if (cub.real_y >= 1)
-		{
-			cub.real_y -= 1;
-			cub.map.position_y = cub.map.position_y->prev;
-		}
-		if (cub.real_y < 0)
-		{
-			cub.real_y += 1;
-			cub.map.position_y = cub.map.position_y->next;
-		}
+	if (cub.real_x >= 1)
+	{
+		cub.real_x -= 1;
+		cub.map.position_x++;
+	}
+	else if (cub.real_x < 0)
+	{
+		cub.real_x += 1;
+		cub.map.position_x--;
+	}
+	if (cub.real_y >= 1)
+	{
+		cub.real_y -= 1;
+		cub.map.position_y = cub.map.position_y->prev;
+	}
+	if (cub.real_y < 0)
+	{
+		cub.real_y += 1;
+		cub.map.position_y = cub.map.position_y->next;
+	}
 	return (cub);
 }
 
@@ -111,26 +105,26 @@ t_cub move_backward(t_cub cub)
 		cub.real_x -= 0.05 * cos(cub.direction);
 	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction)))
 		cub.real_y -= 0.05 * sin(cub.direction);
-		if (cub.real_x >= 1)
-		{
-			cub.real_x -= 1;
-			cub.map.position_x++;
-		}
-		else if (cub.real_x < 0)
-		{
-			cub.real_x += 1;
-			cub.map.position_x--;
-		}
-		if (cub.real_y >= 1)
-		{
-			cub.real_y -= 1;
-			cub.map.position_y = cub.map.position_y->prev;
-		}
-		if (cub.real_y < 0)
-		{
-			cub.real_y += 1;
-			cub.map.position_y = cub.map.position_y->next;
-		}
+	if (cub.real_x >= 1)
+	{
+		cub.real_x -= 1;
+		cub.map.position_x++;
+	}
+	else if (cub.real_x < 0)
+	{
+		cub.real_x += 1;
+		cub.map.position_x--;
+	}
+	if (cub.real_y >= 1)
+	{
+		cub.real_y -= 1;
+		cub.map.position_y = cub.map.position_y->prev;
+	}
+	if (cub.real_y < 0)
+	{
+		cub.real_y += 1;
+		cub.map.position_y = cub.map.position_y->next;
+	}
 	return (cub);
 }
 
@@ -140,26 +134,26 @@ t_cub move_left(t_cub cub)
 		cub.real_x -= 0.05 * cos(cub.direction - M_PI_2);
 	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction - M_PI_2)))
 		cub.real_y -= 0.05 * sin(cub.direction - M_PI_2);
-		if (cub.real_x >= 1)
-		{
-			cub.real_x -= 1;
-			cub.map.position_x++;
-		}
-		else if (cub.real_x < 0)
-		{
-			cub.real_x += 1;
-			cub.map.position_x--;
-		}
-		if (cub.real_y >= 1)
-		{
-			cub.real_y -= 1;
-			cub.map.position_y = cub.map.position_y->prev;
-		}
-		if (cub.real_y < 0)
-		{
-			cub.real_y += 1;
-			cub.map.position_y = cub.map.position_y->next;
-		}
+	if (cub.real_x >= 1)
+	{
+		cub.real_x -= 1;
+		cub.map.position_x++;
+	}
+	else if (cub.real_x < 0)
+	{
+		cub.real_x += 1;
+		cub.map.position_x--;
+	}
+	if (cub.real_y >= 1)
+	{
+		cub.real_y -= 1;
+		cub.map.position_y = cub.map.position_y->prev;
+	}
+	if (cub.real_y < 0)
+	{
+		cub.real_y += 1;
+		cub.map.position_y = cub.map.position_y->next;
+	}
 	return (cub);
 }
 
@@ -169,37 +163,31 @@ t_cub move_right(t_cub cub)
 		cub.real_x -= 0.05 * cos(cub.direction + M_PI_2);
 	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction + M_PI_2)))
 		cub.real_y -= 0.05 * sin(cub.direction + M_PI_2);
-		if (cub.real_x >= 1)
-		{
-			cub.real_x -= 1;
-			cub.map.position_x++;
-		}
-		else if (cub.real_x < 0)
-		{
-			cub.real_x += 1;
-			cub.map.position_x--;
-		}
-		if (cub.real_y >= 1)
-		{
-			cub.real_y -= 1;
-			cub.map.position_y = cub.map.position_y->prev;
-		}
-		if (cub.real_y < 0)
-		{
-			cub.real_y += 1;
-			cub.map.position_y = cub.map.position_y->next;
-		}
+	if (cub.real_x >= 1)
+	{
+		cub.real_x -= 1;
+		cub.map.position_x++;
+	}
+	else if (cub.real_x < 0)
+	{
+		cub.real_x += 1;
+		cub.map.position_x--;
+	}
+	if (cub.real_y >= 1)
+	{
+		cub.real_y -= 1;
+		cub.map.position_y = cub.map.position_y->prev;
+	}
+	if (cub.real_y < 0)
+	{
+		cub.real_y += 1;
+		cub.map.position_y = cub.map.position_y->next;
+	}
 	return (cub);
 }
 
 int     key(int keycode, t_cub *cub)
 {
-	// printf("key : %d\n", keycode);
-	if (keycode == 35)
-	{
-		printf("POSITION xy :	%s	of %d\n", cub->map.position_y->content, cub->map.position_x + 1);
-		printf("real xy : %f, %f\n", cub->real_x, cub->real_y);
-	}
 	if (keycode == 53)
 	{
 		free_all(cub->map);
@@ -211,7 +199,6 @@ int     key(int keycode, t_cub *cub)
 		cub->key.leftmask = 1;
 	if (keycode == 124)
 		cub->key.rightmask = 1;
-
 	if (keycode == 13)
 		cub->key.wmask = 1;
 	if (keycode == 1)
@@ -220,7 +207,6 @@ int     key(int keycode, t_cub *cub)
 		cub->key.smask = 1;
 	if (keycode == 2)
 		cub->key.dmask = 1;
-
 	return (0);
 }
 
@@ -238,11 +224,42 @@ int keyend(int keycode, t_cub *cub)
 		cub->key.smask = 0;
 	if (keycode == 2)
 		cub->key.dmask = 0;
-		
 	return (0);
 }
 
+t_cub	draw_spr(t_cub cub)
+{
+	t_list	*curr;
+	char	*dst;
+	char	*srcs;
+	int		i;
+	int		s_top;
+	int		adr_x;
+	int		adr_y;
 
+	curr = ft_lstlast(cub.spr);
+	i = 0;
+	while (curr->prev)
+	{
+		s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
+		adr_x = (int)trunc(*((double *)curr->content));
+		while (i < (int)*((double *)curr->content + 1))
+		{
+			adr_y = (int)(i * cub.img_s.height / *((double *)curr->content + 1));
+			dst = cub.screen.img_adrr + ((s_top + i) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
+			srcs = cub.img_s.img_adrr + (adr_y * cub.img_s.sl + adr_x * (cub.img_s.bpp / 8));
+			i++;
+			if (s_top + i > cub.map.screen_y || s_top < 0)
+				continue;
+			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
+				*(unsigned int *)dst = *(unsigned int *)srcs;
+		}
+		curr = curr->prev;
+		i = 0;
+	}
+	ft_lstclear(&cub.spr, free);
+	return (cub);
+}
 
 t_cub   draw_no(t_cub cub, double deg, double x, double y)
 {
@@ -285,8 +302,34 @@ t_cub   draw_no(t_cub cub, double deg, double x, double y)
 	{
         dst = cub.screen.img_adrr + (i * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
         *(unsigned int *)dst = cub.map.c_floor;
-		
 	}
+	cub = draw_spr(cub);
+	// t_list *curr;
+	// curr = ft_lstlast(cub.spr);
+	// int d = 0;
+	// while (curr->prev)
+	// {
+	// 	if (*(double *)curr->content ==INFINITY)
+	// 		break;
+	// int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
+	// 	int adx = (int)trunc(*((double *)curr->content));
+	// 	// printf("adx : %d\n", adx);
+	// 	while (d < (int)*((double *)curr->content + 1))
+	// 	{
+	// 	// printf("adx : %d\n", adx);
+	// 		int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
+	// 		dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
+	// 		srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
+	// 		d++;
+	// 		if (s_top + d > cub.map.screen_y || s_top < 0)
+	// 			continue;
+	// 		if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
+	// 			*(unsigned int *)dst = *(unsigned int *)srcs;
+	// 	}
+	// 	curr = curr->prev;
+	// 	d = 0;
+	// }
+	// ft_lstclear(&cub.spr, free);
     return (cub);
 }
 
@@ -332,6 +375,31 @@ t_cub   draw_ea(t_cub cub, double deg, double x, double y)
         *(unsigned int *)dst = cub.map.c_floor;
 		
 	}
+	t_list *curr;
+	curr = ft_lstlast(cub.spr);
+	int d = 0;
+	while (curr->prev)
+	{
+		if (*(double *)curr->content ==INFINITY)
+			break;
+	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
+		int adx = (int)trunc(*((double *)curr->content));
+		while (d < (int)*((double *)curr->content + 1))
+		{
+		// printf("adx : %d\n", adx);
+			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
+			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
+			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
+			d++;
+			if (s_top + d > cub.map.screen_y || s_top < 0)
+				continue;
+			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
+				*(unsigned int *)dst = *(unsigned int *)srcs;
+		}
+		curr = curr->prev;
+		d = 0;
+	}
+	ft_lstclear(&cub.spr, free);
     return (cub);
 }
 
@@ -380,21 +448,29 @@ t_cub   draw_so(t_cub cub, double deg, double x, double y)
         *(unsigned int *)dst = cub.map.c_floor;
 		
 	}
-	curr = cub.spr->next;
 	int d = 0;
-	if (curr)
+	curr = ft_lstlast(cub.spr);
+	while (curr->prev)
 	{
+		if (*(double *)curr->content ==INFINITY)
+			break;
 	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
 		int adx = (int)trunc(*((double *)curr->content));
+		// printf("adx : %d\n", adx);
 		while (d < (int)*((double *)curr->content + 1))
 		{
 			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
+			// printf("adx, ady : %d %d\n", adx, ady);
 			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
 			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
+			d++;
+			if (s_top + d > cub.map.screen_y || s_top < 0)
+				continue;
 			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
 				*(unsigned int *)dst = *(unsigned int *)srcs;
-			d++;
 		}
+		curr = curr->prev;
+		d = 0;
 	}
 	ft_lstclear(&cub.spr, free);
     return (cub);
@@ -445,21 +521,28 @@ t_cub   draw_we(t_cub cub, double deg, double x, double y)
         dst = cub.screen.img_adrr + (i * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
         *(unsigned int *)dst = cub.map.c_floor;
 	}
-	curr = cub.spr->next;
+	curr = ft_lstlast(cub.spr);
 	int d = 0;
-	if (curr)
+	while (curr->prev)
 	{
+		if (*(double *)curr->content ==INFINITY)
+			break;
 	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
 		int adx = (int)trunc(*((double *)curr->content));
 		while (d < (int)*((double *)curr->content + 1))
 		{
+		// printf("adx : %d\n", adx);
 			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
 			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
 			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
+			d++;
+			if (s_top + d > cub.map.screen_y || s_top < 0)
+				continue;
 			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
 				*(unsigned int *)dst = *(unsigned int *)srcs;
-			d++;
 		}
+		curr = curr->prev;
+		d = 0;
 	}
 	ft_lstclear(&cub.spr, free);
     return (cub);
@@ -494,6 +577,28 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 		{
 			if (*(POSITION + (int)light_x) == '1')
                 return (draw_we(cub, deg, light_x, func));
+			else if (*(POSITION + (int)light_x) == '2')
+			{
+				mid = atan2((trunc(func) - 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x)) + 2 * M_PI;
+				dist = hypot(trunc(func) - 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
+				if (!light_y)
+				{
+					mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x)) + 2 * M_PI;
+					dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
+				}
+				edge = atan(0.5 / dist);
+				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_x++;
+			}
 			else
 				light_x++;
 		}
@@ -502,6 +607,29 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 			curr = curr->next;
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_no(cub, deg, gunc, light_y));
+			else if (*(POSITION + (int)light_x - 1) == '2')
+			{
+				mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
+				dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+				// if (!light_x)
+				// {
+				// 	mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
+				// 	dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+				// 	// printf("error1\n");
+				// }
+				edge = atan(0.5 / dist);
+				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_y--;
+			}
 			else
 				light_y--;
 		}
@@ -516,6 +644,12 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 	double  gunc;
 	t_list  *curr;
 
+	double	mid;
+	double	edge;
+	t_list	*scurr;
+	double	dist;
+	double	*arr;
+
 	light_x = 0;
 	light_y = 0;
 	curr = cub.map.position_y;
@@ -528,14 +662,66 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 		{
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_ea(cub, deg, light_x, func));
+			else if (*(POSITION + (int)light_x - 1) == '2')
+			{
+				mid = atan2((trunc(func) - 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x)) + 2 * M_PI;
+				dist = hypot(trunc(func) - 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
+				if (cub.real_y - light_y <= 0.5 && cub.real_y - light_y > 0)
+				{
+					mid = atan2(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
+					dist = hypot(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+				}
+				if (cub.real_y - light_y < 1 && cub.real_y - light_y > 0.5)
+				{
+					mid = atan2(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x)) + 2 * M_PI;
+					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
+					dist = hypot(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+				}
+				edge = atan(0.5 / dist);
+				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_x--;
+			}
 			else
 				light_x--;
 		}
 		else
 		{
 			curr = curr->next;
-			if (*(POSITION + (int)light_x) == '1') //zzzㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+			if (*(POSITION + (int)light_x) == '1') 
                 return (draw_no(cub, deg, gunc, light_y));
+			else if (*(POSITION + (int)light_x) == '2')
+			{
+				mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) - 0.5 - cub.real_x)) + 2 * M_PI;
+				dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) - 0.5 - cub.real_x);
+				if (!light_x)
+				{
+					mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
+					dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+					// printf("error1\n");
+				}
+				edge = atan(0.5 / dist);
+				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_y--;
+			}
 			else
 				light_y--;
 		}
@@ -550,6 +736,12 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 	double  gunc;
 	t_list  *curr;
 
+	double	mid;
+	double	edge;
+	t_list	*scurr;
+	double	dist;
+	double	*arr;
+
 	light_x = 0;
 	light_y = 1;
 	curr = cub.map.position_y;
@@ -562,6 +754,30 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 		{
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_ea(cub, deg, light_x, func));
+			else if (*(POSITION + (int)light_x - 1) == '2')
+			{
+				mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x));
+				dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
+					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
+				if (light_y == 1 && cub.real_y > 0.5 && cub.real_y < 1)
+				{
+					mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x))+ 2 * M_PI;
+					dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
+					// printf("error1\n");
+				}
+				edge = atan(0.5 / dist);
+				// printf("mid, edge : %f, %f\n", mid, edge);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_x--;
+			}
 			else
 				light_x--;
 		}
@@ -570,6 +786,28 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 			curr = curr->prev;
 			if (*(POSITION + (int)light_x) == '1')
                 return (draw_so(cub, deg, gunc, light_y));
+			else if (*(POSITION + (int)light_x) == '2')
+			{
+				mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) - 0.5 - cub.real_x));
+				dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) - 0.5 - cub.real_x);
+				if (!light_x)
+				{
+					mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x));
+					dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+				}
+				edge = atan(0.5 / dist);
+				// printf("mid, edge : %f, %f\n", mid, edge);
+				if ((deg > mid - edge) && (deg < mid + edge))
+				{
+					arr = (double *)malloc(sizeof(double) * 2);
+					scurr = ft_lstnew(arr);
+					ft_lstadd_back(&cub.spr, scurr);
+					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
+					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+				}
+				light_y++;
+			}
 			else
 				light_y++;
 		}
@@ -605,15 +843,17 @@ t_cub shoot_a(t_cub cub, double deg, char *news)
                 return (draw_we(cub, deg, light_x, func));
 			else if (*(POSITION + (int)light_x) == '2')
 			{
-				mid = atan((trunc(func) + 0.5 - cub.real_y) / (light_x + 0.5 - cub.real_x));
+				mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x));
 				dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
 				edge = atan(0.5 / dist);
+				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
 					arr = (double *)malloc(sizeof(double) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
 					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					// printf("error1\n");
 					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x++;
@@ -628,15 +868,21 @@ t_cub shoot_a(t_cub cub, double deg, char *news)
                 return (draw_so(cub, deg, gunc, light_y));
 			else if (*(POSITION + (int)light_x - 1) == '2')
 			{
-				mid = atan((light_y + 0.5 - cub.real_y) / (trunc(gunc) + 0.5 - cub.real_x));
+				mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x));
 				dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
 				edge = atan(0.5 / dist);
+				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
 					arr = (double *)malloc(sizeof(double) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
 					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+				// 	printf("my position : %f, %f\n", cub.real_x, cub.real_y);
+				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				// 	printf("inf? %f\n", (mid + edge - deg) * cub.img_s.width / (2 * edge));
+				// 	printf("inf2? %f\n", (cub.map.screen_y / (2 * dist * tan(cub.fovv / 2))));
+					// printf("error\n");
 					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_y++;
@@ -748,11 +994,7 @@ t_cub singlelight(t_cub cub)
 	cub.spr->next = 0;
 	cub.spr->prev = 0;
 
-
-    // cub.direction += 6 * M_PI_4;
-    // cub.direction -= M_PI_4;
 	deg = cub.deg;
-    // printf("deg : %f\n", deg);
 	if (deg > 0 && deg < M_PI_2)
 		return (shoot_a(cub, deg, &news));
 	if (deg > M_PI_2 && deg < M_PI)
@@ -769,18 +1011,6 @@ t_cub singlelight(t_cub cub)
 		return (shoot_down(cub, &news));
 	if (deg == 0)
 		return (shoot_right(cub, &news));
-
-//받아온 값은 정확한 거리와 벽의 방향. 추가적으로 각도 역시 가지고 있다. 각도는 나중에 휘어지는 것 방지할 때 쓰기
-//이미지의 어떤 값을 참조하려는지 알기 위해서는 해당 좌표도 결국 필요하다.
-	// len = 2 * dist * tan(cub.fovv / 2);
-	// if (news == 'n')
-	// 	cub = draw_no(cub, len);
-	// if (news == 's')
-	// 	cub = draw_so(cub, len);
-	// if (news == 'e')
-	// 	cub = draw_ea(cub, len);
-	// if (news == 'w')
-	// 	cub = draw_we(cub, len);
 	return (cub);
 }
 
@@ -795,9 +1025,9 @@ int gogo(t_cub *cub)
 	if (cub->key.dmask == 1)
 		*cub = move_right(*cub);
 	if (cub->key.rightmask == 1)
-		cub->direction -= 0.07;
+		cub->direction -= 0.05;
 	if (cub->key.leftmask == 1)
-		cub->direction += 0.07;
+		cub->direction += 0.05;
 
 		cub->ray_x = 0;
 	while (cub->ray_x < cub->map.screen_x)
@@ -834,7 +1064,7 @@ void    display(t_map map)
 	cub.img_we.img_adrr = mlx_get_data_addr(cub.img_we.img, &cub.img_we.bpp, &cub.img_we.sl, &cub.img_we.en);
 	cub.img_s.img_adrr = mlx_get_data_addr(cub.img_s.img, &cub.img_s.bpp, &cub.img_s.sl, &cub.img_s.en);
 
-	cub.fovh = M_PI / 3; //60도 마찌??
+	cub.fovh = M_PI / 3; 
 	cub.fovv = cub.fovh * cub.map.screen_y / cub.map.screen_x;
 
 	if (cub.map.m_flag == 'S')
@@ -851,121 +1081,5 @@ void    display(t_map map)
 
 	mlx_loop_hook(cub.mlx, gogo, &cub);
 
-	// cub.ray_x = 0;
-	// while (cub.ray_x < cub.map.screen_x)
-	// {
-	// 	cub = singlelight(cub);
-	// 	cub.ray_x++;
-	// }
-    // mlx_put_image_to_window(cub.mlx, cub.win, cub.screen.img, 0, 0);
 	mlx_loop(cub.mlx);
 }
-
-// typedef struct s_val
-// {
-//     void *mlx;
-//     void *win;
-//     void *img;
-//     int bpp;
-//     int sl;
-//     int en;
-//     char *imad;
-
-//     int x;
-//     int y;
-//     unsigned int color;
-
-//     char *dst;
-//     int i;
-//     int tcl;
-// }              t_val;
-
-// int print(int key, t_val *t)
-// {
-//     printf("key : %d\n", key);
-// }
-
-// int rendering(t_val *t)
-// {
-//     t->x = 0;
-//     t->y = 0;
-//     while (t->x < 480)
-//     {
-//         while (t->y < 360)
-//         {
-//             t->dst = t->imad + (t->y * t->sl + t->x * (t->bpp / 8));
-//             *(unsigned int*)t->dst = t->color;
-//             t->y += 1;
-//             // t->color += 10;
-//         }
-//         t->x += 1;
-//         t->y = 0;
-//         // t->color += 10;
-//     }
-//     if (t->color <= 0x000000ff)
-//     {
-//         t->tcl = 1;
-//         t->color += t->tcl;
-//     }
-//     else if (t->color <= 0x0000ffff)
-//     {
-//         t->tcl = 0x00000100;
-//         t->color += t->tcl;
-//     }
-//     else if (t->color <= 0x00ffffff)
-//     {
-//         t->tcl = 0x00010000;
-//         t->color += t->tcl;
-//     }
-//     else
-//     {
-//         t->color = 0;
-//     }
-
-//     mlx_put_image_to_window(t->mlx, t->win, t->img, 120, 60);
-// }
-// void display(void)
-// {
-//     t_val t;
-
-//     t.color = 0;
-//     t.mlx = mlx_init();
-// 	printf("what?\n");
-//     t.win = mlx_new_window(t.mlx, 720, 480, "그림 그리기");
-//     t.i = 0;
-//     t.img = mlx_new_image(t.mlx, 480, 360);
-//     t.imad = mlx_get_data_addr(t.img, &t.bpp, &t.sl, &t.en);
-//     printf("bpp: %d, sl: %d, endian: %d\n", t.bpp, t.sl, t.en);
-//     mlx_hook(t.win, 2, 1, print, &t);
-//     mlx_loop_hook(t.mlx, rendering, &t);
-//     mlx_loop(t.mlx);
-// }
-
-// 이미지 확대와 축소
-	// cub.img_ea.img = mlx_xpm_file_to_image(cub.mlx, cub.map.i_ea, &cub.img_ea.width, &cub.img_ea.height);
-	// cub.screen.img = mlx_new_image(cub.mlx, ga, se); //나중에는 창 크기에 맞춰서 크기를 잡게 되지 않을까.
-
-	// cub.img_ea.img_adrr = mlx_get_data_addr(cub.img_ea.img, &cub.img_ea.bpp, &cub.img_ea.sl, &cub.img_ea.en);
-	// cub.screen.img_adrr = mlx_get_data_addr(cub.screen.img, &cub.screen.bpp, &cub.screen.sl, &cub.screen.en);
-
-	// int i = -1;
-	// int j = -1;
-	// char *dst;
-	// char *srcs;
-	// int x;
-	// int y;
-	// while (++i < ga)
-	// {
-	//     j = -1;
-	//     while (++j < se)
-	//     {
-	//         x = i * cub.img_ea.width / ga;
-	//         y = j * cub.img_ea.height / se;
-	//         printf("so xy : %d, %d\n", x, y);
-	//         dst = cub.screen.img_adrr + (j * cub.screen.sl + i * (cub.screen.bpp / 8));
-	//         srcs = cub.img_ea.img_adrr + (y * cub.img_ea.sl + x * (cub.img_ea.bpp / 8));
-	//         *(unsigned int *)dst = *(unsigned int *)srcs;
-	//     }
-	// }
-	// mlx_put_image_to_window(cub.mlx, cub.win, cub.img_ea.img, 60, 60);
-	// mlx_put_image_to_window(cub.mlx, cub.win, cub.screen.img, 120, 60);
