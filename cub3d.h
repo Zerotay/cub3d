@@ -129,13 +129,6 @@ typedef struct	s_key
 
 }				t_key;
 
-typedef struct s_spr
-{
-	double x;
-	double y;
-}				t_spr;
-
-
 typedef struct	s_cub
 {
 	t_map	map;

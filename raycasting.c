@@ -72,10 +72,10 @@ int is_ycollission(t_cub cub, double y)
 
 t_cub move_forward(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x + 0.05 * cos(cub.direction)))
-		cub.real_x += 0.05 * cos(cub.direction);
-	if (!is_ycollission(cub, cub.real_y + 0.05 * sin(cub.direction)))
-		cub.real_y += 0.05 * sin(cub.direction);
+	if (!is_xcollission(cub, cub.real_x + MS * cos(cub.direction)))
+		cub.real_x += MS * cos(cub.direction);
+	if (!is_ycollission(cub, cub.real_y + MS * sin(cub.direction)))
+		cub.real_y += MS * sin(cub.direction);
 	if (cub.real_x >= 1)
 	{
 		cub.real_x -= 1;
@@ -101,10 +101,10 @@ t_cub move_forward(t_cub cub)
 
 t_cub move_backward(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - 0.05 * cos(cub.direction)))
-		cub.real_x -= 0.05 * cos(cub.direction);
-	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction)))
-		cub.real_y -= 0.05 * sin(cub.direction);
+	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction)))
+		cub.real_x -= MS * cos(cub.direction);
+	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction)))
+		cub.real_y -= MS * sin(cub.direction);
 	if (cub.real_x >= 1)
 	{
 		cub.real_x -= 1;
@@ -130,10 +130,10 @@ t_cub move_backward(t_cub cub)
 
 t_cub move_left(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - 0.05 * cos(cub.direction - M_PI_2)))
-		cub.real_x -= 0.05 * cos(cub.direction - M_PI_2);
-	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction - M_PI_2)))
-		cub.real_y -= 0.05 * sin(cub.direction - M_PI_2);
+	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction - M_PI_2)))
+		cub.real_x -= MS * cos(cub.direction - M_PI_2);
+	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction - M_PI_2)))
+		cub.real_y -= MS * sin(cub.direction - M_PI_2);
 	if (cub.real_x >= 1)
 	{
 		cub.real_x -= 1;
@@ -159,10 +159,10 @@ t_cub move_left(t_cub cub)
 
 t_cub move_right(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - 0.05 * cos(cub.direction + M_PI_2)))
-		cub.real_x -= 0.05 * cos(cub.direction + M_PI_2);
-	if (!is_ycollission(cub, cub.real_y - 0.05 * sin(cub.direction + M_PI_2)))
-		cub.real_y -= 0.05 * sin(cub.direction + M_PI_2);
+	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction + M_PI_2)))
+		cub.real_x -= MS * cos(cub.direction + M_PI_2);
+	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction + M_PI_2)))
+		cub.real_y -= MS * sin(cub.direction + M_PI_2);
 	if (cub.real_x >= 1)
 	{
 		cub.real_x -= 1;
@@ -234,28 +234,28 @@ t_cub	draw_spr(t_cub cub)
 	char	*srcs;
 	int		i;
 	int		s_top;
+	int		temp;
 	int		adr_x;
 	int		adr_y;
 
 	curr = ft_lstlast(cub.spr);
-	i = 0;
 	while (curr->prev)
 	{
+		i = -1;
 		s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
 		adr_x = (int)trunc(*((double *)curr->content));
-		while (i < (int)*((double *)curr->content + 1))
+		temp = s_top;
+		while (++i < (int)*((double *)curr->content + 1))
 		{
 			adr_y = (int)(i * cub.img_s.height / *((double *)curr->content + 1));
-			dst = cub.screen.img_adrr + ((s_top + i) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
+			dst = cub.screen.img_adrr + (s_top * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
 			srcs = cub.img_s.img_adrr + (adr_y * cub.img_s.sl + adr_x * (cub.img_s.bpp / 8));
-			i++;
-			if (s_top + i > cub.map.screen_y || s_top < 0)
+			if (++s_top < 0 || temp + i > cub.map.screen_y)
 				continue;
-			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
+			if (*(unsigned int *)srcs <= 0x00ffffff)
 				*(unsigned int *)dst = *(unsigned int *)srcs;
 		}
 		curr = curr->prev;
-		i = 0;
 	}
 	ft_lstclear(&cub.spr, free);
 	return (cub);
@@ -304,32 +304,6 @@ t_cub   draw_no(t_cub cub, double deg, double x, double y)
         *(unsigned int *)dst = cub.map.c_floor;
 	}
 	cub = draw_spr(cub);
-	// t_list *curr;
-	// curr = ft_lstlast(cub.spr);
-	// int d = 0;
-	// while (curr->prev)
-	// {
-	// 	if (*(double *)curr->content ==INFINITY)
-	// 		break;
-	// int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
-	// 	int adx = (int)trunc(*((double *)curr->content));
-	// 	// printf("adx : %d\n", adx);
-	// 	while (d < (int)*((double *)curr->content + 1))
-	// 	{
-	// 	// printf("adx : %d\n", adx);
-	// 		int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
-	// 		dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
-	// 		srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
-	// 		d++;
-	// 		if (s_top + d > cub.map.screen_y || s_top < 0)
-	// 			continue;
-	// 		if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
-	// 			*(unsigned int *)dst = *(unsigned int *)srcs;
-	// 	}
-	// 	curr = curr->prev;
-	// 	d = 0;
-	// }
-	// ft_lstclear(&cub.spr, free);
     return (cub);
 }
 
@@ -373,33 +347,9 @@ t_cub   draw_ea(t_cub cub, double deg, double x, double y)
 	{
         dst = cub.screen.img_adrr + (i * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
         *(unsigned int *)dst = cub.map.c_floor;
-		
+
 	}
-	t_list *curr;
-	curr = ft_lstlast(cub.spr);
-	int d = 0;
-	while (curr->prev)
-	{
-		if (*(double *)curr->content ==INFINITY)
-			break;
-	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
-		int adx = (int)trunc(*((double *)curr->content));
-		while (d < (int)*((double *)curr->content + 1))
-		{
-		// printf("adx : %d\n", adx);
-			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
-			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
-			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
-			d++;
-			if (s_top + d > cub.map.screen_y || s_top < 0)
-				continue;
-			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
-				*(unsigned int *)dst = *(unsigned int *)srcs;
-		}
-		curr = curr->prev;
-		d = 0;
-	}
-	ft_lstclear(&cub.spr, free);
+	cub = draw_spr(cub);
     return (cub);
 }
 
@@ -413,7 +363,7 @@ t_cub   draw_so(t_cub cub, double deg, double x, double y)
     int adr_x;
     int adr_y;
 	int tmp;
-    
+
 	t_list *curr;
 
     dist = hypot(x - cub.real_x, y - cub.real_y);
@@ -446,33 +396,9 @@ t_cub   draw_so(t_cub cub, double deg, double x, double y)
 	{
         dst = cub.screen.img_adrr + (i * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
         *(unsigned int *)dst = cub.map.c_floor;
-		
+
 	}
-	int d = 0;
-	curr = ft_lstlast(cub.spr);
-	while (curr->prev)
-	{
-		if (*(double *)curr->content ==INFINITY)
-			break;
-	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
-		int adx = (int)trunc(*((double *)curr->content));
-		// printf("adx : %d\n", adx);
-		while (d < (int)*((double *)curr->content + 1))
-		{
-			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
-			// printf("adx, ady : %d %d\n", adx, ady);
-			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
-			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
-			d++;
-			if (s_top + d > cub.map.screen_y || s_top < 0)
-				continue;
-			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
-				*(unsigned int *)dst = *(unsigned int *)srcs;
-		}
-		curr = curr->prev;
-		d = 0;
-	}
-	ft_lstclear(&cub.spr, free);
+	cub = draw_spr(cub);
     return (cub);
 }
 
@@ -521,30 +447,7 @@ t_cub   draw_we(t_cub cub, double deg, double x, double y)
         dst = cub.screen.img_adrr + (i * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
         *(unsigned int *)dst = cub.map.c_floor;
 	}
-	curr = ft_lstlast(cub.spr);
-	int d = 0;
-	while (curr->prev)
-	{
-		if (*(double *)curr->content ==INFINITY)
-			break;
-	int s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
-		int adx = (int)trunc(*((double *)curr->content));
-		while (d < (int)*((double *)curr->content + 1))
-		{
-		// printf("adx : %d\n", adx);
-			int ady = (int)(d * cub.img_s.height / *((double *)curr->content + 1));
-			dst = cub.screen.img_adrr + ((s_top + d) * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
-			srcs = cub.img_s.img_adrr + (ady * cub.img_s.sl + adx * (cub.img_s.bpp / 8));
-			d++;
-			if (s_top + d > cub.map.screen_y || s_top < 0)
-				continue;
-			if (*(unsigned int *)srcs <= 0x00ffffff && *(unsigned int *)srcs)
-				*(unsigned int *)dst = *(unsigned int *)srcs;
-		}
-		curr = curr->prev;
-		d = 0;
-	}
-	ft_lstclear(&cub.spr, free);
+	cub = draw_spr(cub);
     return (cub);
 }
 
@@ -573,7 +476,7 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
 		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
 
-		if (hypot(light_x, func) < hypot(light_y, gunc))
+		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
 		{
 			if (*(POSITION + (int)light_x) == '1')
                 return (draw_we(cub, deg, light_x, func));
@@ -594,7 +497,6 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
 					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
-					// printf("error1\n");
 					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x++;
@@ -607,18 +509,24 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 			curr = curr->next;
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_no(cub, deg, gunc, light_y));
-			else if (*(POSITION + (int)light_x - 1) == '2')
+			else if (*(POSITION + (int)light_x - 1) == '2'
+			//  && !(cub.real_x > 0.5 && cub.real_x < 1 && light_x == 1 && light_y == 0)
+			 )
 			{
 				mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
 				dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
-				// if (!light_x)
-				// {
-				// 	mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
-				// 	dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
-				// 	// printf("error1\n");
-				// }
+				if (cub.real_x > 0.5 && cub.real_x < 1 && light_x == 1 && light_y == 0)
+				{
+					mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
+					dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+					// printf("error1\n");
+					// printf("lx ly : %f, %f\n", light_x, light_y);
+					// printf("rx ry : %f, %f\n", cub.real_x, cub.real_y);
+				}
 				edge = atan(0.5 / dist);
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
+				// printf("lx ly : %f, %f\n", light_x, light_y);
+				// printf("rx ry : %f, %f\n", cub.real_x, cub.real_y);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
 					arr = (double *)malloc(sizeof(double) * 2);
@@ -658,7 +566,7 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
 		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
 
-		if (hypot(light_x - 1, func - 1) < hypot(light_y - 1, gunc - 1))
+		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
 		{
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_ea(cub, deg, light_x, func));
@@ -697,7 +605,7 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 		else
 		{
 			curr = curr->next;
-			if (*(POSITION + (int)light_x) == '1') 
+			if (*(POSITION + (int)light_x) == '1')
                 return (draw_no(cub, deg, gunc, light_y));
 			else if (*(POSITION + (int)light_x) == '2')
 			{
@@ -750,7 +658,7 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
 		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
 
-		if (hypot(light_x, func) < hypot(light_y, gunc))
+		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
 		{
 			if (*(POSITION + (int)light_x - 1) == '1')
                 return (draw_ea(cub, deg, light_x, func));
@@ -1064,7 +972,7 @@ void    display(t_map map)
 	cub.img_we.img_adrr = mlx_get_data_addr(cub.img_we.img, &cub.img_we.bpp, &cub.img_we.sl, &cub.img_we.en);
 	cub.img_s.img_adrr = mlx_get_data_addr(cub.img_s.img, &cub.img_s.bpp, &cub.img_s.sl, &cub.img_s.en);
 
-	cub.fovh = M_PI / 3; 
+	cub.fovh = M_PI / 3;
 	cub.fovv = cub.fovh * cub.map.screen_y / cub.map.screen_x;
 
 	if (cub.map.m_flag == 'S')
@@ -1075,7 +983,7 @@ void    display(t_map map)
 		cub.direction = 0;
 	else
 		cub.direction = M_PI;
-	
+
 	mlx_hook(cub.win, 3, 0, keyend, &cub);
 	mlx_hook(cub.win, 2, 0, key, &cub);
 

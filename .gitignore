@@ -1,4 +1,4 @@
 get_next_line/
-libft.a
-libmlx.a
+./libft.a
+./libmlx.a
 libmlx.dylib
