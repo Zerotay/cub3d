@@ -5,9 +5,9 @@ t_map   fill_no(t_map map, char *line)
 	int     i;
 	int     len;
 
-	if (map.t_flag & NO)
+	if (map.t_flag & IS_NO)
 		free_error(map);
-	map.t_flag |= NO;
+	map.t_flag |= IS_NO;
 	i = 2;
 	len = 0;
 	while (line[i] == ' ')
@@ -30,9 +30,9 @@ t_map   fill_so(t_map map, char *line)
 	int     i;
 	int     len;
 
-	if (map.t_flag & SO)
+	if (map.t_flag & IS_SO)
 		free_error(map);
-	map.t_flag |= SO;
+	map.t_flag |= IS_SO;
 	i = 2;
 	len = 0;
 	while (line[i] == ' ')
@@ -55,9 +55,9 @@ t_map   fill_we(t_map map, char *line)
 	int     i;
 	int     len;
 
-	if (map.t_flag & WE)
+	if (map.t_flag & IS_WE)
 		free_error(map);
-	map.t_flag |= WE;
+	map.t_flag |= IS_WE;
 	i = 2;
 	len = 0;
 	while (line[i] == ' ')
@@ -80,9 +80,9 @@ t_map   fill_ea(t_map map, char *line)
 	int     i;
 	int     len;
 
-	if (map.t_flag & EA)
+	if (map.t_flag & IS_EA)
 		free_error(map);
-	map.t_flag |= EA;
+	map.t_flag |= IS_EA;
 	i = 2;
 	len = 0;
 	while (line[i] == ' ')
@@ -105,9 +105,9 @@ t_map   fill_s(t_map map, char *line)
 	int     i;
 	int     len;
 
-	if (map.t_flag & S)
+	if (map.t_flag & IS_S)
 		free_error(map);
-	map.t_flag |= S;
+	map.t_flag |= IS_S;
 	i = 1;
 	len = 0;
 	while (line[i] == ' ')

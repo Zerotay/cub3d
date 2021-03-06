@@ -5,9 +5,9 @@ t_map   fill_r(t_map map, char *line)
 	int i;
 
 	i = 1;
-	if (map.t_flag & R)
+	if (map.t_flag & IS_R)
 		free_error(map);
-	map.t_flag |= R;
+	map.t_flag |= IS_R;
 	while (line[i] == ' ')
 		i++;
 	while (line[i] >= '0' && line[i] <= '9')
@@ -56,9 +56,9 @@ t_map	fill_f(t_map map, char *line)
 
 	i = 1;
 	tmp = 0;
-	if (map.t_flag & F)
+	if (map.t_flag & IS_F)
 		free_error(map);
-	map.t_flag |= F;
+	map.t_flag |= IS_F;
 	while (line[i] == ' ')
 		i++;
 	check = save_color(line, &i, &tmp, &map.c_floor);
@@ -84,9 +84,9 @@ t_map	fill_c(t_map map, char *line)
 
 	i = 1;
 	tmp = 0;
-	if (map.t_flag & C)
+	if (map.t_flag & IS_C)
 		free_error(map);
-	map.t_flag |= C;
+	map.t_flag |= IS_C;
 	while (line[i] == ' ')
 		i++;
 	check = save_color(line, &i, &tmp, &map.c_ceiling);

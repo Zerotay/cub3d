@@ -8,14 +8,14 @@
 #include "mlx.h"
 #include <math.h>
 
-# define R 128
-# define NO 64
-# define SO 32
-# define WE 16
-# define EA 8
-# define S 4
-# define F 2
-# define C 1
+# define IS_R 128
+# define IS_NO 64
+# define IS_SO 32
+# define IS_WE 16
+# define IS_EA 8
+# define IS_S 4
+# define IS_F 2
+# define IS_C 1
 # define T_OK 255
 
 # define CURR (char *)tmp->content
@@ -63,12 +63,14 @@
 
 #define MOVING_SPEED	0.05
 #define MS				MOVING_SPEED
-
 #define COLLISION_RANGE	0.4
 #define	CR				COLLISION_RANGE
 #define	CURR_WALL		(char *)curr->content + cub.map.position_x
 #define	NEXT_WALL		(char *)curr->next->content + cub.map.position_x
 #define	PREV_WALL		(char *)curr->prev->content + cub.map.position_x
+
+
+
 
 /*
    \ C | B /
@@ -113,7 +115,7 @@ typedef struct s_img
 	int bpp;
     int sl;
     int en;
-	char	*img_adrr;
+	char	*i_adr;
 	int	height;
 	int	width;
 }				t_img;
@@ -140,7 +142,7 @@ typedef struct	s_cub
 	t_img	img_we;
 	t_img	img_ea;
 	t_img	img_s;
-	t_img	screen;
+	t_img	scr;
 
 	double	fovh;
 	double	fovv;
@@ -152,8 +154,6 @@ typedef struct	s_cub
 	double	wall_x;
 	double	wall_y;
 
-	int		ray_x;
-	int		ray_y;
 
 	t_key	key;
 	t_list	*spr;
@@ -184,5 +184,10 @@ t_map	make_list(t_map map, int fd);
 t_map	parse_map(t_map map);
 
 void	display(t_map map);
+
+t_img	draw_spr(t_cub cub, int ray);
+t_cub   draw_no(t_cub cub, double x, double y, int ray);
+
+
 
 #endif
