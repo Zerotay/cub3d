@@ -230,30 +230,25 @@ int keyend(int keycode, t_cub *cub)
 t_cub	draw_spr(t_cub cub)
 {
 	t_list	*curr;
-	char	*dst;
-	char	*srcs;
-	int		i;
 	int		s_top;
 	int		temp;
-	int		adr_x;
-	int		adr_y;
 
 	curr = ft_lstlast(cub.spr);
 	while (curr->prev)
 	{
-		i = -1;
-		s_top = (cub.map.screen_y / 2) - (int)(*((double *)curr->content + 1) / 2);
-		adr_x = (int)trunc(*((double *)curr->content));
+		cub.i = -1;
+		s_top = (cub.map.screen_y / 2) - (*((int *)curr->content + 1) / 2);
+		cub.adr_x = *((int *)curr->content);
 		temp = s_top;
-		while (++i < (int)*((double *)curr->content + 1))
+		while (++cub.i < *((int *)curr->content + 1))
 		{
-			adr_y = (int)(i * cub.img_s.height / *((double *)curr->content + 1));
-			dst = cub.screen.img_adrr + (s_top * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
-			srcs = cub.img_s.img_adrr + (adr_y * cub.img_s.sl + adr_x * (cub.img_s.bpp / 8));
-			if (++s_top < 0 || temp + i > cub.map.screen_y)
+			cub.adr_y = (int)(cub.i * cub.img_s.height / *((int *)curr->content + 1));
+			cub.dst = cub.screen.img_adrr + (s_top * cub.screen.sl + cub.ray_x * (cub.screen.bpp / 8));
+			cub.srcs = cub.img_s.img_adrr + (cub.adr_y * cub.img_s.sl + cub.adr_x * (cub.img_s.bpp / 8));
+			if (++s_top < 0 || temp + cub.i > cub.map.screen_y)
 				continue;
-			if (*(unsigned int *)srcs <= 0x00ffffff)
-				*(unsigned int *)dst = *(unsigned int *)srcs;
+			if (*(unsigned int *)cub.srcs <= 0x00ffffff)
+				*(unsigned int *)cub.dst = *(unsigned int *)cub.srcs;
 		}
 		curr = curr->prev;
 	}
@@ -464,7 +459,7 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 	double	edge;
 	t_list	*scurr;
 	double	dist;
-	double	*arr;
+	int	*arr;
 
 
 	light_x = 1;
@@ -493,11 +488,11 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x++;
 			}
@@ -529,12 +524,12 @@ t_cub shoot_d(t_cub cub, double deg, char *news)
 				// printf("rx ry : %f, %f\n", cub.real_x, cub.real_y);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_y--;
 			}
@@ -556,7 +551,7 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 	double	edge;
 	t_list	*scurr;
 	double	dist;
-	double	*arr;
+	int	*arr;
 
 	light_x = 0;
 	light_y = 0;
@@ -590,12 +585,12 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x--;
 			}
@@ -621,12 +616,12 @@ t_cub shoot_c(t_cub cub, double deg, char *news)
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_y--;
 			}
@@ -648,7 +643,7 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 	double	edge;
 	t_list	*scurr;
 	double	dist;
-	double	*arr;
+	int	*arr;
 
 	light_x = 0;
 	light_y = 1;
@@ -677,12 +672,12 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x--;
 			}
@@ -707,12 +702,12 @@ t_cub shoot_b(t_cub cub, double deg, char *news)
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_y++;
 			}
@@ -733,7 +728,7 @@ t_cub shoot_a(t_cub cub, double deg, char *news)
 	double	edge;
 	t_list	*scurr;
 	double	dist;
-	double	*arr;
+	int	*arr;
 
 	t_list  *curr;
 
@@ -757,12 +752,12 @@ t_cub shoot_a(t_cub cub, double deg, char *news)
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 					// printf("error1\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_x++;
 			}
@@ -782,16 +777,16 @@ t_cub shoot_a(t_cub cub, double deg, char *news)
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
 				{
-					arr = (double *)malloc(sizeof(double) * 2);
+					arr = (int *)malloc(sizeof(int) * 2);
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
-					*((double *)scurr->content) = (mid + edge - deg) * cub.img_s.width / (2 * edge);
+					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
 				// 	printf("my position : %f, %f\n", cub.real_x, cub.real_y);
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
 				// 	printf("inf? %f\n", (mid + edge - deg) * cub.img_s.width / (2 * edge));
 				// 	printf("inf2? %f\n", (cub.map.screen_y / (2 * dist * tan(cub.fovv / 2))));
 					// printf("error\n");
-					*((double *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
+					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
 				}
 				light_y++;
 			}

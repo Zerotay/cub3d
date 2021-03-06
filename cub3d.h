@@ -157,6 +157,12 @@ typedef struct	s_cub
 
 	t_key	key;
 	t_list	*spr;
+
+	char	*dst;
+	char	*srcs;
+	int		adr_x;
+	int		adr_y;
+	int		i;
 }				t_cub;
 
 void	free_all(t_map map);
