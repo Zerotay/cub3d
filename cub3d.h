@@ -187,6 +187,11 @@ void	display(t_map map);
 
 t_img	draw_spr(t_cub cub, int ray);
 t_cub   draw_no(t_cub cub, double x, double y, int ray);
+t_img	draw_ceiling(t_cub cub, int ray, int top);
+t_img	draw_floor(t_cub cub, int ray, int i);
+t_cub   draw_ea(t_cub cub, double x, double y, int ray);
+t_cub   draw_so(t_cub cub, double x, double y, int ray);
+t_cub   draw_we(t_cub cub, double x, double y, int ray);
 
 
 

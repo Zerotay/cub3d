@@ -1,8 +1,8 @@
 R 720 480
-NO ./images/SO.xpm
-SO ./images/NO.xpm
-EA ./images/EA.xpm
-WE ./images/WE3.xpm
+NO ./images/dirt_full.xpm
+SO ./images/SO.xpm
+EA ./images/bog_green3.xpm
+WE ./images/lair0.xpm
 S ./images/S.xpm
 F 0,255,255
 C 255,255,0
