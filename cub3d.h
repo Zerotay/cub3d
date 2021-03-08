@@ -18,6 +18,13 @@
 # define IS_C 1
 # define T_OK 255
 
+# define W	1
+# define A	2
+# define S	4
+# define D	8
+# define R	16
+# define L	32
+
 #define KeyPress			2
 #define KeyRelease			3
 #define ButtonPress			4
@@ -86,18 +93,18 @@ typedef struct  s_map
 {
 	unsigned char t_flag;
 
-	int screen_x;
-	int screen_y;
-	char *i_no;
-	char *i_so;
-	char *i_ea;
-	char *i_we;
-	char *i_s;
-	int c_floor;
-	int c_ceiling;
-	char m_flag;
+	int		screen_x;
+	int		screen_y;
+	char	*i_no;
+	char	*i_so;
+	char	*i_ea;
+	char	*i_we;
+	char	*i_s;
+	int		c_floor;
+	int		c_ceiling;
+	char	m_flag;
 	t_list	*map;
-	int px;
+	int		px;
 	t_list	*py;
 }               t_map;
 
@@ -138,6 +145,7 @@ typedef struct	s_cub
 
 	double	fovh;
 	double	fovv;
+	char	action;
 
 // 빛쏘기
 	double	direction;
@@ -172,7 +180,7 @@ typedef struct	s_cub
 * sx,sy : screen. width and height of screen 
 * px,py : position. coorndinate of player in entire map
 * rx,ry : real. exact location of player in 1*1 square
-* lx,ly : light. nexux between ony ray and integer of graph
+* vx,vy : vim! nexux between ony ray and integer of graph
 * ft,gt : function of ray, and the inverse's (fucntion, gunction)
 *
 *
@@ -207,6 +215,19 @@ t_img   draw_so(t_cub cub, double x, double y, int ray);
 t_img   draw_we(t_cub cub, double x, double y, int ray);
 
 t_img shoot_d(t_cub cub, double deg, int ray);
+t_img shoot_c(t_cub cub, double deg, int ray);
+t_img shoot_b(t_cub cub, double deg, int ray);
+t_img shoot_a(t_cub cub, double deg, int ray);
+void	link_spr(t_cub cub);
+
+t_cub move_forward(t_cub cub);
+t_cub move_backward(t_cub cub);
+t_cub move_left(t_cub cub);
+t_cub move_right(t_cub cub);
+int is_xcollission(t_cub cub, double x);
+int is_ycollission(t_cub cub, double y);
+
+
 
 void	free_exit(t_cub cub);
 
