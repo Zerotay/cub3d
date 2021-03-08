@@ -32,6 +32,13 @@ void    free_mlx(t_cub cub)
 		mlx_destroy_window(cub.mlx, cub.win);
 }
 
+void	free_exit(t_cub cub)
+{
+	free_mlx(cub);
+	ft_lstclear(&cub.spr, free);
+	free_error(cub.map);
+}
+
 int is_xcollission(t_cub cub, double x)
 {
 	t_list	*curr;
@@ -231,99 +238,9 @@ int keyend(int keycode, t_cub *cub)
 
 
 
-t_cub shoot_d(t_cub cub, double deg, int ray)
-{
-	double  light_x;
-	double  light_y;
-	double  func;
-	double  gunc;
-	t_list  *curr;
-
-		double	mid;
-	double	edge;
-	t_list	*scurr;
-	double	dist;
-	int	*arr;
 
 
-	light_x = 1;
-	light_y = 0;
-
-	curr = cub.map.position_y;
-	while (1)
-	{
-		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
-		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
-
-		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
-		{
-			if (*(POSITION + (int)light_x) == '1')
-                return (draw_we(cub, light_x, func, ray));
-			else if (*(POSITION + (int)light_x) == '2')
-			{
-				mid = atan2((trunc(func) - 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x)) + 2 * M_PI;
-				dist = hypot(trunc(func) - 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
-				if (!light_y)
-				{
-					mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x)) + 2 * M_PI;
-					dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
-				}
-				edge = atan(0.5 / dist);
-				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
-				if ((deg > mid - edge) && (deg < mid + edge))
-				{
-					arr = (int *)malloc(sizeof(int) * 2);
-					scurr = ft_lstnew(arr);
-					ft_lstadd_back(&cub.spr, scurr);
-					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
-					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
-				}
-				light_x++;
-			}
-			else
-				light_x++;
-		}
-		else
-		{
-			curr = curr->next;
-			if (*(POSITION + (int)light_x - 1) == '1')
-                return (draw_no(cub, gunc, light_y, ray));
-			else if (*(POSITION + (int)light_x - 1) == '2'
-			//  && !(cub.real_x > 0.5 && cub.real_x < 1 && light_x == 1 && light_y == 0)
-			 )
-			{
-				mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
-				dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
-				if (cub.real_x > 0.5 && cub.real_x < 1 && light_x == 1 && light_y == 0)
-				{
-					mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
-					dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
-					// printf("error1\n");
-					// printf("lx ly : %f, %f\n", light_x, light_y);
-					// printf("rx ry : %f, %f\n", cub.real_x, cub.real_y);
-				}
-				edge = atan(0.5 / dist);
-				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
-				// printf("lx ly : %f, %f\n", light_x, light_y);
-				// printf("rx ry : %f, %f\n", cub.real_x, cub.real_y);
-				if ((deg > mid - edge) && (deg < mid + edge))
-				{
-					arr = (int *)malloc(sizeof(int) * 2);
-					scurr = ft_lstnew(arr);
-					ft_lstadd_back(&cub.spr, scurr);
-					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
-					// printf("error1\n");
-					*((int *)scurr->content + 1) = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
-				}
-				light_y--;
-			}
-			else
-				light_y--;
-		}
-	}
-}
-
-t_cub shoot_c(t_cub cub, double deg, int ray)
+t_img shoot_c(t_cub cub, double deg, int ray)
 {
 	double  light_x;
 	double  light_y;
@@ -415,7 +332,7 @@ t_cub shoot_c(t_cub cub, double deg, int ray)
 	}
 }
 
-t_cub shoot_b(t_cub cub, double deg, int ray)
+t_img shoot_b(t_cub cub, double deg, int ray)
 {
 	double  light_x;
 	double  light_y;
@@ -501,7 +418,7 @@ t_cub shoot_b(t_cub cub, double deg, int ray)
 	}
 }
 
-t_cub shoot_a(t_cub cub, double deg, int ray)
+t_img shoot_a(t_cub cub, double deg, int ray)
 {
 	double  light_x;
 	double  light_y;
@@ -584,7 +501,7 @@ t_cub shoot_a(t_cub cub, double deg, int ray)
 
 
 
-t_cub shoot_up(t_cub cub, int ray)
+t_img shoot_up(t_cub cub, int ray)
 {
 	double  light_y;
 	t_list  *curr;
@@ -599,10 +516,10 @@ t_cub shoot_up(t_cub cub, int ray)
 		else
 			light_y++;
 	}
-	return (cub);
+	return (cub.scr);
 }
 
-t_cub shoot_left(t_cub cub, int ray)
+t_img shoot_left(t_cub cub, int ray)
 {
 	double  light_x;
 	t_list  *curr;
@@ -616,10 +533,10 @@ t_cub shoot_left(t_cub cub, int ray)
 		else
 			light_x--;
 	}
-	return (cub);
+	return (cub.scr);
 }
 
-t_cub shoot_down(t_cub cub, int ray)
+t_img shoot_down(t_cub cub, int ray)
 {
 	double  light_y;
 	t_list  *curr;
@@ -634,10 +551,10 @@ t_cub shoot_down(t_cub cub, int ray)
 		else
 			light_y--;
 	}
-	return (cub);
+	return (cub.scr);
 }
 
-t_cub shoot_right(t_cub cub, int ray)
+t_img shoot_right(t_cub cub, int ray)
 {
 	double  light_x;
 	t_list  *curr;
@@ -651,11 +568,11 @@ t_cub shoot_right(t_cub cub, int ray)
 		else
 			light_x++;
 	}
-	return (cub);
+	return (cub.scr);
 }
 
 
-t_cub singlelight(t_cub cub, int ray)
+t_img singlelight(t_cub cub, int ray)
 {
 	double deg;
 	char news;
@@ -694,7 +611,7 @@ t_cub singlelight(t_cub cub, int ray)
 		return (shoot_down(cub, ray));
 	if (cub.deg == 0)
 		return (shoot_right(cub, ray));
-	return (cub);
+	return (cub.scr);
 }
 
 int gogo(t_cub *cub)
@@ -716,7 +633,7 @@ int gogo(t_cub *cub)
 	ray = 0;
 	while (ray < cub->map.screen_x)
 	{
-		*cub = singlelight(*cub, ray);
+		cub->scr = singlelight(*cub, ray);
 		ray++;
 	}
     mlx_put_image_to_window(cub->mlx, cub->win, cub->scr.img, 0, 0);

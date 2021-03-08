@@ -147,17 +147,29 @@ typedef struct	s_cub
 	double	fovh;
 	double	fovv;
 
+// 빛쏘기
 	double	direction;
 	double	deg;
 	double	real_x;
 	double	real_y;
 	double	wall_x;
 	double	wall_y;
+	double	ft;
+	double	gt;
+	int		vim_x;
+	int		vim_y;
+
 
 
 	t_key	key;
-	t_list	*spr;
 
+// 스프라이트 관련
+	t_list	*spr;
+	double	mid;
+	double	edge;
+	double	dist;
+
+// 색칠하기
 	char	*dst;
 	char	*srcs;
 	int		adr_x;
@@ -165,6 +177,16 @@ typedef struct	s_cub
 	int		i;
 }				t_cub;
 
+/*
+* px,py : position. coorndinate of player in entire map
+* rx,ry : real. exact location of player in 1*1 square
+* lx,ly : light. nexux between ony ray and integer of graph
+*
+*
+*
+*
+*
+*/
 void	free_all(t_map map);
 t_map	parse(char *gv, t_map map);
 
@@ -186,12 +208,16 @@ t_map	parse_map(t_map map);
 void	display(t_map map);
 
 t_img	draw_spr(t_cub cub, int ray);
-t_cub   draw_no(t_cub cub, double x, double y, int ray);
 t_img	draw_ceiling(t_cub cub, int ray, int top);
 t_img	draw_floor(t_cub cub, int ray, int i);
-t_cub   draw_ea(t_cub cub, double x, double y, int ray);
-t_cub   draw_so(t_cub cub, double x, double y, int ray);
-t_cub   draw_we(t_cub cub, double x, double y, int ray);
+t_img   draw_no(t_cub cub, double x, double y, int ray);
+t_img   draw_ea(t_cub cub, double x, double y, int ray);
+t_img   draw_so(t_cub cub, double x, double y, int ray);
+t_img   draw_we(t_cub cub, double x, double y, int ray);
+
+t_img shoot_d(t_cub cub, double deg, int ray);
+
+void	free_exit(t_cub cub);
 
 
 

@@ -26,7 +26,7 @@ t_img	draw_we_wall(t_cub cub, int *i, int height, int ray)
 	return (cub.scr);
 }
 
-t_cub   draw_we(t_cub cub, double x, double y, int ray)
+t_img   draw_we(t_cub cub, double x, double y, int ray)
 {
     double dist;
     int wall_height;
@@ -45,5 +45,5 @@ t_cub   draw_we(t_cub cub, double x, double y, int ray)
 	cub.scr = draw_we_wall(cub, &i, wall_height, ray);
 	cub.scr = draw_floor(cub, ray, i);
 	cub.scr = draw_spr(cub, ray);
-    return (cub);
+	return (cub.scr);
 }
