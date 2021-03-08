@@ -32,7 +32,7 @@ t_img   draw_we(t_cub cub, double x, double y, int ray)
     int wall_height;
     int top;
     int i;
-    dist = hypot(x - cub.real_x, y - cub.real_y);
+    dist = hypot(x - cub.rx, y - cub.ry);
 	dist *= cos(cub.direction - cub.deg);
     if (y < 0)
     	cub.adr_x = trunc((y - trunc(y)) * -1 * cub.img_we.width);

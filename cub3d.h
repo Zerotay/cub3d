@@ -18,10 +18,6 @@
 # define IS_C 1
 # define T_OK 255
 
-# define CURR (char *)tmp->content
-# define PREV (char *)tmp->prev->content
-# define NEXT (char *)tmp->next->content
-
 #define KeyPress			2
 #define KeyRelease			3
 #define ButtonPress			4
@@ -59,15 +55,11 @@
 #define LASTEvent			36
 
 
-#define POSITION			(char *)curr->content + cub.map.position_x
 
 #define MOVING_SPEED	0.05
 #define MS				MOVING_SPEED
 #define COLLISION_RANGE	0.4
 #define	CR				COLLISION_RANGE
-#define	CURR_WALL		(char *)curr->content + cub.map.position_x
-#define	NEXT_WALL		(char *)curr->next->content + cub.map.position_x
-#define	PREV_WALL		(char *)curr->prev->content + cub.map.position_x
 
 
 
@@ -105,8 +97,8 @@ typedef struct  s_map
 	int c_ceiling;
 	char m_flag;
 	t_list	*map;
-	int position_x;
-	t_list	*position_y;
+	int px;
+	t_list	*py;
 }               t_map;
 
 typedef struct s_img
@@ -150,14 +142,13 @@ typedef struct	s_cub
 // 빛쏘기
 	double	direction;
 	double	deg;
-	double	real_x;
-	double	real_y;
-	double	wall_x;
-	double	wall_y;
+	double	rx;
+	double	ry;
 	double	ft;
 	double	gt;
-	int		vim_x;
-	int		vim_y;
+	int		vx;
+	int		vy;
+	t_list	*curr;
 
 
 
@@ -178,11 +169,11 @@ typedef struct	s_cub
 }				t_cub;
 
 /*
+* sx,sy : screen. width and height of screen 
 * px,py : position. coorndinate of player in entire map
 * rx,ry : real. exact location of player in 1*1 square
 * lx,ly : light. nexux between ony ray and integer of graph
-*
-*
+* ft,gt : function of ray, and the inverse's (fucntion, gunction)
 *
 *
 *

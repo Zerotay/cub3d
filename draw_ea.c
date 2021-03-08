@@ -33,7 +33,7 @@ t_img   draw_ea(t_cub cub, double x, double y, int ray)
     int top;
     int i;
 
-    dist = hypot(x - cub.real_x, y - cub.real_y);
+    dist = hypot(x - cub.rx, y - cub.ry);
 	dist *= cos(cub.direction - cub.deg);
     if (y < 0)
     	cub.adr_x = cub.img_ea.width + trunc((y - trunc(y)) * cub.img_ea.width) - 1;

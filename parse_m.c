@@ -30,25 +30,25 @@ void	error_if_invalid(t_map map, int i, t_list *tmp)
 {
 	if (!tmp->prev || !tmp->next || !tmp->prev->content)
 		free_error(map);
-	if (!i || *(CURR + i - 1) == ' ' || !*(CURR + i + 1) || *(CURR + i + 1) == ' ')
+	if (!i || *((char *)tmp->content + i - 1) == ' ' || !*((char *)tmp->content + i + 1) || *((char *)tmp->content + i + 1) == ' ')
 		free_error(map);
-	if ((int)ft_strlen(PREV) < i + 1 || *(PREV + i) == ' ')
+	if ((int)ft_strlen((char *)tmp->prev->content) < i + 1 || *((char *)tmp->prev->content + i) == ' ')
 		free_error(map);
-	if ((int)ft_strlen(NEXT) < i + 1 || *(NEXT + i) == ' ')
+	if ((int)ft_strlen((char *)tmp->next->content) < i + 1 || *((char *)tmp->next->content + i) == ' ')
 		free_error(map);
 }
 
 t_map	check_map_valid(t_map map, int i, t_list *tmp)
 {
-	if (*(CURR + i) == '0' || *(CURR + i) == '2')
+	if (*((char *)tmp->content + i) == '0' || *((char *)tmp->content + i) == '2')
 		error_if_invalid(map, i, tmp);
-	if (*(CURR + i) == 'N' || *(CURR + i) == 'E' || *(CURR + i) == 'W' || *(CURR + i) == 'S')
+	if (*((char *)tmp->content + i) == 'N' || *((char *)tmp->content + i) == 'E' || *((char *)tmp->content + i) == 'W' || *((char *)tmp->content + i) == 'S')
 	{
 		if (map.m_flag)
 			free_error(map);
-		map.m_flag = *(CURR + i);
-		map.position_x = i;
-		map.position_y = tmp;
+		map.m_flag = *((char *)tmp->content + i);
+		map.px = i;
+		map.py = tmp;
 		error_if_invalid(map, i, tmp);
 	}
 	return (map);
@@ -63,7 +63,7 @@ t_map	parse_map(t_map map)
 	while (tmp)
 	{
 		i = -1;
-		while (*(CURR + ++i))
+		while (*((char *)tmp->content + ++i))
 			map = check_map_valid(map, i, tmp);
 		tmp = tmp->next;
 	}

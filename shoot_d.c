@@ -21,12 +21,12 @@ void	link_spr(t_cub cub)
 
 void	d_we_spr(t_cub cub)
 {
-	cub.mid = atan2((trunc(cub.ft) - 0.5 - cub.real_y), (cub.vim_x + 0.5 - cub.real_x)) + 2 * M_PI;
-	cub.dist = hypot(trunc(cub.ft) - 0.5 - cub.real_y, cub.vim_x + 0.5 - cub.real_x);
-	if (!cub.vim_y)
-		cub.mid = atan2((trunc(cub.ft) + 0.5 - cub.real_y), (cub.vim_x + 0.5 - cub.real_x)) + 2 * M_PI;
-	if (!cub.vim_y)
-		cub.dist = hypot(trunc(cub.ft) + 0.5 - cub.real_y, cub.vim_x + 0.5 - cub.real_x);
+	cub.mid = atan2((trunc(cub.ft) - 0.5 - cub.ry), (cub.vx + 0.5 - cub.rx)) + 2 * M_PI;
+	cub.dist = hypot(trunc(cub.ft) - 0.5 - cub.ry, cub.vx + 0.5 - cub.rx);
+	if (!cub.vy)
+		cub.mid = atan2((trunc(cub.ft) + 0.5 - cub.ry), (cub.vx + 0.5 - cub.rx)) + 2 * M_PI;
+	if (!cub.vy)
+		cub.dist = hypot(trunc(cub.ft) + 0.5 - cub.ry, cub.vx + 0.5 - cub.rx);
 	cub.edge = atan(0.5 / cub.dist);
 	if ((cub.deg > cub.mid - cub.edge) && (cub.deg < cub.mid + cub.edge))
 		link_spr(cub);
@@ -34,45 +34,48 @@ void	d_we_spr(t_cub cub)
 
 void	d_no_spr(t_cub cub)
 {
-	cub.mid = atan2((cub.vim_y - 0.5 - cub.real_y), (trunc(cub.gt) + 0.5 - cub.real_x)) + 2 * M_PI;
-	cub.dist = hypot(cub.vim_y - 0.5 - cub.real_y, trunc(cub.gt) + 0.5 - cub.real_x);
-	if (cub.real_x > 0.5 && cub.real_x < 1 && cub.vim_x == 1 && cub.vim_y == 0)
-		cub.mid = atan2((cub.vim_y - 0.5 - cub.real_y), (trunc(cub.gt) + 0.5 - cub.real_x)) + 2 * M_PI;
-	if (cub.real_x > 0.5 && cub.real_x < 1 && cub.vim_x == 1 && cub.vim_y == 0)
-		cub.dist = hypot(cub.vim_y - 0.5 - cub.real_y, trunc(cub.gt) + 0.5 - cub.real_x);
+	cub.mid = atan2((cub.vy - 0.5 - cub.ry), (trunc(cub.gt) + 0.5 - cub.rx)) + 2 * M_PI;
+	cub.dist = hypot(cub.vy - 0.5 - cub.ry, trunc(cub.gt) + 0.5 - cub.rx);
+	if (cub.rx > 0.5 && cub.rx < 1 && cub.vx == 1 && cub.vy == 0)
+		cub.mid = atan2((cub.vy - 0.5 - cub.ry), (trunc(cub.gt) + 0.5 - cub.rx)) + 2 * M_PI;
+	if (cub.rx > 0.5 && cub.rx < 1 && cub.vx == 1 && cub.vy == 0)
+		cub.dist = hypot(cub.vy - 0.5 - cub.ry, trunc(cub.gt) + 0.5 - cub.rx);
 	cub.edge = atan(0.5 / cub.dist);
 	if ((cub.deg > cub.mid - cub.edge) && (cub.deg < cub.mid + cub.edge))
 		link_spr(cub);
 }
 
+t_cub	d_init(t_cub cub)
+{
+	cub.vx = 1;
+	cub.vy = 0;
+	cub.curr = cub.map.py;
+	return (cub);
+}
 
 t_img shoot_d(t_cub cub, double deg, int ray)
 {
-	t_list  *curr;
-
-	cub.vim_x = 1;
-	cub.vim_y = 0;
-	curr = cub.map.position_y;
+	cub = d_init(cub);
 	while (1)
 	{
-		cub.ft = tan(cub.deg) * (cub.vim_x - cub.real_x) + cub.real_y;
-		cub.gt = (1 / tan(cub.deg)) * (cub.vim_y - cub.real_y) + cub.real_x;
-		if (hypot(cub.vim_x - cub.real_x, cub.ft - cub.real_y) < hypot(cub.vim_y - cub.real_y, cub.gt - cub.real_x))
+		cub.ft = tan(cub.deg) * (cub.vx - cub.rx) + cub.ry;
+		cub.gt = (1 / tan(cub.deg)) * (cub.vy - cub.ry) + cub.rx;
+		if (hypot(cub.vx - cub.rx, cub.ft - cub.ry) < hypot(cub.vy - cub.ry, cub.gt - cub.rx))
 		{
-			if (*((char *)curr->content + cub.map.position_x + cub.vim_x) == '1')
-                return (draw_we(cub, cub.vim_x, cub.ft, ray));
-			else if (*((char *)curr->content + cub.map.position_x + cub.vim_x) == '2')
+			if (*((char *)cub.curr->content + cub.map.px + cub.vx) == '1')
+                return (draw_we(cub, cub.vx, cub.ft, ray));
+			else if (*((char *)cub.curr->content + cub.map.px + cub.vx) == '2')
 				d_we_spr(cub);
-			cub.vim_x++;
+			cub.vx++;
 		}
 		else
 		{
-			curr = curr->next;
-			if (*((char *)curr->content + cub.map.position_x + cub.vim_x - 1) == '1')
-                return (draw_no(cub, cub.gt, cub.vim_y, ray));
-			else if (*((char *)curr->content + cub.map.position_x + cub.vim_x - 1) == '2')
+			cub.curr = cub.curr->next;
+			if (*((char *)cub.curr->content + cub.map.px + cub.vx - 1) == '1')
+                return (draw_no(cub, cub.gt, cub.vy, ray));
+			else if (*((char *)cub.curr->content + cub.map.px + cub.vx - 1) == '2')
 				d_no_spr(cub);
-			cub.vim_y--;
+			cub.vy--;
 		}
 	}
 }

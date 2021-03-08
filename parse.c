@@ -19,8 +19,8 @@ t_map   map_init(t_map map)
 	map.map->content = 0;
 	map.map->next = 0;
 	map.map->prev = 0;
-	map.position_x = 0;
-	map.position_y = 0;
+	map.px = 0;
+	map.py = 0;
 	return (map);
 }
 

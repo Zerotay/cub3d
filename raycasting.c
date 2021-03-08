@@ -9,8 +9,8 @@ t_cub   cub_init(t_cub cub)
 	cub.img_s.img = 0;
 	cub.img_no.img = 0;
 	cub.img_so.img = 0;
-	cub.real_x = 0.5;
-	cub.real_y = 0.5;
+	cub.rx = 0.5;
+	cub.ry = 0.5;
 	return (cub);
 }
 
@@ -43,18 +43,18 @@ int is_xcollission(t_cub cub, double x)
 {
 	t_list	*curr;
 
-	curr = cub.map.position_y;
-	if (x < CR && *(CURR_WALL - 1) == '1')
+	curr = cub.map.py;
+	if (x < CR && *((char *)curr->content + cub.map.px - 1) == '1')
 		return (1);
-	if (x > 1 - CR && *(CURR_WALL + 1) == '1')
+	if (x > 1 - CR && *((char *)curr->content + cub.map.px + 1) == '1')
 		return (1);
-	if (x < CR && cub.real_y < CR && *(NEXT_WALL - 1) == '1')
+	if (x < CR && cub.ry < CR && *((char *)curr->next->content + cub.map.px - 1) == '1')
 		return (1);
-	if (x < CR && cub.real_y > 1 - CR && *(PREV_WALL - 1) == '1')
+	if (x < CR && cub.ry > 1 - CR && *((char *)curr->prev->content + cub.map.px - 1) == '1')
 		return (1);
-	if (x > 1 - CR && cub.real_y < CR && *(NEXT_WALL + 1) == '1')
+	if (x > 1 - CR && cub.ry < CR && *((char *)curr->next->content + cub.map.px + 1) == '1')
 		return (1);
-	if (x > 1 - CR && cub.real_y > 1 - CR && *(PREV_WALL + 1) == '1')
+	if (x > 1 - CR && cub.ry > 1 - CR && *((char *)curr->prev->content + cub.map.px + 1) == '1')
 		return (1);
 	return (0);
 }
@@ -63,134 +63,134 @@ int is_ycollission(t_cub cub, double y)
 {
 	t_list	*curr;
 
-	curr = cub.map.position_y;
-	if (y < CR && *(NEXT_WALL) == '1')
+	curr = cub.map.py;
+	if (y < CR && *((char *)curr->next->content + cub.map.px) == '1')
 		return (1);
-	if (y > 1 - CR && *(PREV_WALL) == '1')
+	if (y > 1 - CR && *((char *)curr->prev->content + cub.map.px) == '1')
 		return (1);
-	if (cub.real_x < CR && y < CR && *(NEXT_WALL - 1) == '1')
+	if (cub.rx < CR && y < CR && *((char *)curr->next->content + cub.map.px - 1) == '1')
 		return (1);
-	if (cub.real_x < CR && y > 1 - CR && *(PREV_WALL - 1) == '1')
+	if (cub.rx < CR && y > 1 - CR && *((char *)curr->prev->content + cub.map.px - 1) == '1')
 		return (1);
-	if (cub.real_x > 1 - CR && y < CR && *(NEXT_WALL + 1) == '1')
+	if (cub.rx > 1 - CR && y < CR && *((char *)curr->next->content + cub.map.px + 1) == '1')
 		return (1);
-	if (cub.real_x > 1 - CR && y > 1 - CR && *(PREV_WALL + 1) == '1')
+	if (cub.rx > 1 - CR && y > 1 - CR && *((char *)curr->prev->content + cub.map.px + 1) == '1')
 		return (1);
 	return (0);
 }
 
 t_cub move_forward(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x + MS * cos(cub.direction)))
-		cub.real_x += MS * cos(cub.direction);
-	if (!is_ycollission(cub, cub.real_y + MS * sin(cub.direction)))
-		cub.real_y += MS * sin(cub.direction);
-	if (cub.real_x >= 1)
+	if (!is_xcollission(cub, cub.rx + MS * cos(cub.direction)))
+		cub.rx += MS * cos(cub.direction);
+	if (!is_ycollission(cub, cub.ry + MS * sin(cub.direction)))
+		cub.ry += MS * sin(cub.direction);
+	if (cub.rx >= 1)
 	{
-		cub.real_x -= 1;
-		cub.map.position_x++;
+		cub.rx -= 1;
+		cub.map.px++;
 	}
-	else if (cub.real_x < 0)
+	else if (cub.rx < 0)
 	{
-		cub.real_x += 1;
-		cub.map.position_x--;
+		cub.rx += 1;
+		cub.map.px--;
 	}
-	if (cub.real_y >= 1)
+	if (cub.ry >= 1)
 	{
-		cub.real_y -= 1;
-		cub.map.position_y = cub.map.position_y->prev;
+		cub.ry -= 1;
+		cub.map.py = cub.map.py->prev;
 	}
-	if (cub.real_y < 0)
+	if (cub.ry < 0)
 	{
-		cub.real_y += 1;
-		cub.map.position_y = cub.map.position_y->next;
+		cub.ry += 1;
+		cub.map.py = cub.map.py->next;
 	}
 	return (cub);
 }
 
 t_cub move_backward(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction)))
-		cub.real_x -= MS * cos(cub.direction);
-	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction)))
-		cub.real_y -= MS * sin(cub.direction);
-	if (cub.real_x >= 1)
+	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction)))
+		cub.rx -= MS * cos(cub.direction);
+	if (!is_ycollission(cub, cub.ry - MS * sin(cub.direction)))
+		cub.ry -= MS * sin(cub.direction);
+	if (cub.rx >= 1)
 	{
-		cub.real_x -= 1;
-		cub.map.position_x++;
+		cub.rx -= 1;
+		cub.map.px++;
 	}
-	else if (cub.real_x < 0)
+	else if (cub.rx < 0)
 	{
-		cub.real_x += 1;
-		cub.map.position_x--;
+		cub.rx += 1;
+		cub.map.px--;
 	}
-	if (cub.real_y >= 1)
+	if (cub.ry >= 1)
 	{
-		cub.real_y -= 1;
-		cub.map.position_y = cub.map.position_y->prev;
+		cub.ry -= 1;
+		cub.map.py = cub.map.py->prev;
 	}
-	if (cub.real_y < 0)
+	if (cub.ry < 0)
 	{
-		cub.real_y += 1;
-		cub.map.position_y = cub.map.position_y->next;
+		cub.ry += 1;
+		cub.map.py = cub.map.py->next;
 	}
 	return (cub);
 }
 
 t_cub move_left(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction - M_PI_2)))
-		cub.real_x -= MS * cos(cub.direction - M_PI_2);
-	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction - M_PI_2)))
-		cub.real_y -= MS * sin(cub.direction - M_PI_2);
-	if (cub.real_x >= 1)
+	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction - M_PI_2)))
+		cub.rx -= MS * cos(cub.direction - M_PI_2);
+	if (!is_ycollission(cub, cub.ry - MS * sin(cub.direction - M_PI_2)))
+		cub.ry -= MS * sin(cub.direction - M_PI_2);
+	if (cub.rx >= 1)
 	{
-		cub.real_x -= 1;
-		cub.map.position_x++;
+		cub.rx -= 1;
+		cub.map.px++;
 	}
-	else if (cub.real_x < 0)
+	else if (cub.rx < 0)
 	{
-		cub.real_x += 1;
-		cub.map.position_x--;
+		cub.rx += 1;
+		cub.map.px--;
 	}
-	if (cub.real_y >= 1)
+	if (cub.ry >= 1)
 	{
-		cub.real_y -= 1;
-		cub.map.position_y = cub.map.position_y->prev;
+		cub.ry -= 1;
+		cub.map.py = cub.map.py->prev;
 	}
-	if (cub.real_y < 0)
+	if (cub.ry < 0)
 	{
-		cub.real_y += 1;
-		cub.map.position_y = cub.map.position_y->next;
+		cub.ry += 1;
+		cub.map.py = cub.map.py->next;
 	}
 	return (cub);
 }
 
 t_cub move_right(t_cub cub)
 {
-	if (!is_xcollission(cub, cub.real_x - MS * cos(cub.direction + M_PI_2)))
-		cub.real_x -= MS * cos(cub.direction + M_PI_2);
-	if (!is_ycollission(cub, cub.real_y - MS * sin(cub.direction + M_PI_2)))
-		cub.real_y -= MS * sin(cub.direction + M_PI_2);
-	if (cub.real_x >= 1)
+	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction + M_PI_2)))
+		cub.rx -= MS * cos(cub.direction + M_PI_2);
+	if (!is_ycollission(cub, cub.ry - MS * sin(cub.direction + M_PI_2)))
+		cub.ry -= MS * sin(cub.direction + M_PI_2);
+	if (cub.rx >= 1)
 	{
-		cub.real_x -= 1;
-		cub.map.position_x++;
+		cub.rx -= 1;
+		cub.map.px++;
 	}
-	else if (cub.real_x < 0)
+	else if (cub.rx < 0)
 	{
-		cub.real_x += 1;
-		cub.map.position_x--;
+		cub.rx += 1;
+		cub.map.px--;
 	}
-	if (cub.real_y >= 1)
+	if (cub.ry >= 1)
 	{
-		cub.real_y -= 1;
-		cub.map.position_y = cub.map.position_y->prev;
+		cub.ry -= 1;
+		cub.map.py = cub.map.py->prev;
 	}
-	if (cub.real_y < 0)
+	if (cub.ry < 0)
 	{
-		cub.real_y += 1;
-		cub.map.position_y = cub.map.position_y->next;
+		cub.ry += 1;
+		cub.map.py = cub.map.py->next;
 	}
 	return (cub);
 }
@@ -256,31 +256,31 @@ t_img shoot_c(t_cub cub, double deg, int ray)
 
 	light_x = 0;
 	light_y = 0;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
-		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
-		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
+		func = tan(deg) * (light_x - cub.rx) + cub.ry;
+		gunc = (1 / tan(deg)) * (light_y - cub.ry) + cub.rx;
 
-		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
+		if (hypot(light_x - cub.rx, func - cub.ry) < hypot(light_y - cub.ry, gunc - cub.rx))
 		{
-			if (*(POSITION + (int)light_x - 1) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '1')
                 return (draw_ea(cub, light_x, func, ray));
-			else if (*(POSITION + (int)light_x - 1) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '2')
 			{
-				mid = atan2((trunc(func) - 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x)) + 2 * M_PI;
-				dist = hypot(trunc(func) - 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
-				if (cub.real_y - light_y <= 0.5 && cub.real_y - light_y > 0)
+				mid = atan2((trunc(func) - 0.5 - cub.ry), (light_x - 0.5 - cub.rx)) + 2 * M_PI;
+				dist = hypot(trunc(func) - 0.5 - cub.ry, light_x - 0.5 - cub.rx);
+				if (cub.ry - light_y <= 0.5 && cub.ry - light_y > 0)
 				{
-					mid = atan2(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+					mid = atan2(trunc(func) + 0.5 - cub.ry, (light_x - 0.5 - cub.rx));
 					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
-					dist = hypot(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+					dist = hypot(trunc(func) + 0.5 - cub.ry, (light_x - 0.5 - cub.rx));
 				}
-				if (cub.real_y - light_y < 1 && cub.real_y - light_y > 0.5)
+				if (cub.ry - light_y < 1 && cub.ry - light_y > 0.5)
 				{
-					mid = atan2(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x)) + 2 * M_PI;
+					mid = atan2(trunc(func) + 0.5 - cub.ry, (light_x - 0.5 - cub.rx)) + 2 * M_PI;
 					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
-					dist = hypot(trunc(func) + 0.5 - cub.real_y, (light_x - 0.5 - cub.real_x));
+					dist = hypot(trunc(func) + 0.5 - cub.ry, (light_x - 0.5 - cub.rx));
 				}
 				edge = atan(0.5 / dist);
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
@@ -301,16 +301,16 @@ t_img shoot_c(t_cub cub, double deg, int ray)
 		else
 		{
 			curr = curr->next;
-			if (*(POSITION + (int)light_x) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x) == '1')
                 return (draw_no(cub, gunc, light_y, ray));
-			else if (*(POSITION + (int)light_x) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x) == '2')
 			{
-				mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) - 0.5 - cub.real_x)) + 2 * M_PI;
-				dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) - 0.5 - cub.real_x);
+				mid = atan2((light_y - 0.5 - cub.ry), (trunc(gunc) - 0.5 - cub.rx)) + 2 * M_PI;
+				dist = hypot(light_y - 0.5 - cub.ry, trunc(gunc) - 0.5 - cub.rx);
 				if (!light_x)
 				{
-					mid = atan2((light_y - 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x)) + 2 * M_PI;
-					dist = hypot(light_y - 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+					mid = atan2((light_y - 0.5 - cub.ry), (trunc(gunc) + 0.5 - cub.rx)) + 2 * M_PI;
+					dist = hypot(light_y - 0.5 - cub.ry, trunc(gunc) + 0.5 - cub.rx);
 					// printf("error1\n");
 				}
 				edge = atan(0.5 / dist);
@@ -348,25 +348,25 @@ t_img shoot_b(t_cub cub, double deg, int ray)
 
 	light_x = 0;
 	light_y = 1;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
-		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
-		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
+		func = tan(deg) * (light_x - cub.rx) + cub.ry;
+		gunc = (1 / tan(deg)) * (light_y - cub.ry) + cub.rx;
 
-		if (hypot(light_x - cub.real_x, func - cub.real_y) < hypot(light_y - cub.real_y, gunc - cub.real_x))
+		if (hypot(light_x - cub.rx, func - cub.ry) < hypot(light_y - cub.ry, gunc - cub.rx))
 		{
-			if (*(POSITION + (int)light_x - 1) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '1')
                 return (draw_ea(cub, light_x, func, ray));
-			else if (*(POSITION + (int)light_x - 1) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '2')
 			{
-				mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x));
-				dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
+				mid = atan2((trunc(func) + 0.5 - cub.ry), (light_x - 0.5 - cub.rx));
+				dist = hypot(trunc(func) + 0.5 - cub.ry, light_x - 0.5 - cub.rx);
 					// printf("lightxy : %d %d\n", (int)light_x, (int)light_y);
-				if (light_y == 1 && cub.real_y > 0.5 && cub.real_y < 1)
+				if (light_y == 1 && cub.ry > 0.5 && cub.ry < 1)
 				{
-					mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x - 0.5 - cub.real_x))+ 2 * M_PI;
-					dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x - 0.5 - cub.real_x);
+					mid = atan2((trunc(func) + 0.5 - cub.ry), (light_x - 0.5 - cub.rx))+ 2 * M_PI;
+					dist = hypot(trunc(func) + 0.5 - cub.ry, light_x - 0.5 - cub.rx);
 					// printf("error1\n");
 				}
 				edge = atan(0.5 / dist);
@@ -388,16 +388,16 @@ t_img shoot_b(t_cub cub, double deg, int ray)
 		else
 		{
 			curr = curr->prev;
-			if (*(POSITION + (int)light_x) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x) == '1')
                 return (draw_so(cub, gunc, light_y, ray));
-			else if (*(POSITION + (int)light_x) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x) == '2')
 			{
-				mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) - 0.5 - cub.real_x));
-				dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) - 0.5 - cub.real_x);
+				mid = atan2((light_y + 0.5 - cub.ry), (trunc(gunc) - 0.5 - cub.rx));
+				dist = hypot(light_y + 0.5 - cub.ry, trunc(gunc) - 0.5 - cub.rx);
 				if (!light_x)
 				{
-					mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x));
-					dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+					mid = atan2((light_y + 0.5 - cub.ry), (trunc(gunc) + 0.5 - cub.rx));
+					dist = hypot(light_y + 0.5 - cub.ry, trunc(gunc) + 0.5 - cub.rx);
 				}
 				edge = atan(0.5 / dist);
 				// printf("mid, edge : %f, %f\n", mid, edge);
@@ -435,20 +435,20 @@ t_img shoot_a(t_cub cub, double deg, int ray)
 
 	light_x = 1;
 	light_y = 1;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
-		func = tan(deg) * (light_x - cub.real_x) + cub.real_y;
-		gunc = (1 / tan(deg)) * (light_y - cub.real_y) + cub.real_x;
+		func = tan(deg) * (light_x - cub.rx) + cub.ry;
+		gunc = (1 / tan(deg)) * (light_y - cub.ry) + cub.rx;
 
 		if (hypot(light_x, func) < hypot(light_y, gunc))
 		{
-			if (*(POSITION + (int)light_x) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x) == '1')
                 return (draw_we(cub, light_x, func, ray));
-			else if (*(POSITION + (int)light_x) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x) == '2')
 			{
-				mid = atan2((trunc(func) + 0.5 - cub.real_y), (light_x + 0.5 - cub.real_x));
-				dist = hypot(trunc(func) + 0.5 - cub.real_y, light_x + 0.5 - cub.real_x);
+				mid = atan2((trunc(func) + 0.5 - cub.ry), (light_x + 0.5 - cub.rx));
+				dist = hypot(trunc(func) + 0.5 - cub.ry, light_x + 0.5 - cub.rx);
 				edge = atan(0.5 / dist);
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
@@ -468,12 +468,12 @@ t_img shoot_a(t_cub cub, double deg, int ray)
 		else
 		{
 			curr = curr->prev;
-			if (*(POSITION + (int)light_x - 1) == '1')
+			if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '1')
                 return (draw_so(cub, gunc, light_y, ray));
-			else if (*(POSITION + (int)light_x - 1) == '2')
+			else if (*((char *)curr->content + cub.map.px + (int)light_x - 1) == '2')
 			{
-				mid = atan2((light_y + 0.5 - cub.real_y), (trunc(gunc) + 0.5 - cub.real_x));
-				dist = hypot(light_y + 0.5 - cub.real_y, trunc(gunc) + 0.5 - cub.real_x);
+				mid = atan2((light_y + 0.5 - cub.ry), (trunc(gunc) + 0.5 - cub.rx));
+				dist = hypot(light_y + 0.5 - cub.ry, trunc(gunc) + 0.5 - cub.rx);
 				edge = atan(0.5 / dist);
 				// printf("mid, edge : %f, %f\n", mid, edge);
 				if ((deg > mid - edge) && (deg < mid + edge))
@@ -482,7 +482,7 @@ t_img shoot_a(t_cub cub, double deg, int ray)
 					scurr = ft_lstnew(arr);
 					ft_lstadd_back(&cub.spr, scurr);
 					*((int *)scurr->content) = (int)trunc((mid + edge - deg) * cub.img_s.width / (2 * edge));
-				// 	printf("my position : %f, %f\n", cub.real_x, cub.real_y);
+				// 	printf("my position : %f, %f\n", cub.rx, cub.ry);
 				// printf("mid, edge, deg : %f, %f, %f\n", mid, edge, deg);
 				// 	printf("inf? %f\n", (mid + edge - deg) * cub.img_s.width / (2 * edge));
 				// 	printf("inf2? %f\n", (cub.map.screen_y / (2 * dist * tan(cub.fovv / 2))));
@@ -507,12 +507,12 @@ t_img shoot_up(t_cub cub, int ray)
 	t_list  *curr;
 
 	light_y = 1;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
 		curr = curr->prev;
-		if (*(POSITION) == '1')
-            return (draw_so(cub, cub.real_x, light_y, ray));
+		if (*((char *)curr->content + cub.map.px) == '1')
+            return (draw_so(cub, cub.rx, light_y, ray));
 		else
 			light_y++;
 	}
@@ -525,11 +525,11 @@ t_img shoot_left(t_cub cub, int ray)
 	t_list  *curr;
 
 	light_x = 0;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
-		if (*(POSITION + (int)light_x) == '1')
-            return (draw_ea(cub, light_x, cub.real_y, ray));
+		if (*((char *)curr->content + cub.map.px + (int)light_x) == '1')
+            return (draw_ea(cub, light_x, cub.ry, ray));
 		else
 			light_x--;
 	}
@@ -542,12 +542,12 @@ t_img shoot_down(t_cub cub, int ray)
 	t_list  *curr;
 
 	light_y = 0;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
 		curr = curr->next;
-		if (*(POSITION) == '1')
-            return (draw_no(cub, cub.real_x, light_y, ray));
+		if (*((char *)curr->content + cub.map.px) == '1')
+            return (draw_no(cub, cub.rx, light_y, ray));
 		else
 			light_y--;
 	}
@@ -560,11 +560,11 @@ t_img shoot_right(t_cub cub, int ray)
 	t_list  *curr;
 
 	light_x = 1;
-	curr = cub.map.position_y;
+	curr = cub.map.py;
 	while (1)
 	{
-		if (*(POSITION) == '1')
-            return (draw_we(cub, light_x, cub.real_y, ray));
+		if (*((char *)curr->content + cub.map.px) == '1')
+            return (draw_we(cub, light_x, cub.ry, ray));
 		else
 			light_x++;
 	}
