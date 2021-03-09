@@ -51,19 +51,25 @@ t_cub	load_mlx_1(t_cub cub)
 
 t_cub	cub_setting(t_cub cub)
 {
+	mlx_get_screen_size(cub.mlx, &cub.vx, &cub.vy);
+	if (cub.vx < cub.map.screen_x)
+		cub.map.screen_x = cub.vx;
+	if (cub.vy < cub.map.screen_y)
+		cub.map.screen_y = cub.vy;
 	cub = cub_init(cub);
 	cub = load_mlx_1(cub);
 	cub = load_mlx_2(cub);
-    cub.scr.i_adr = mlx_get_data_addr(cub.scr.img, &cub.scr.bpp, &cub.scr.sl, &cub.scr.en);
-	cub.img_no.i_adr = mlx_get_data_addr(cub.img_no.img, &cub.img_no.bpp, &cub.img_no.sl, &cub.img_no.en);
-	cub.img_so.i_adr = mlx_get_data_addr(cub.img_so.img, &cub.img_so.bpp, &cub.img_so.sl, &cub.img_so.en);
-	cub.img_ea.i_adr = mlx_get_data_addr(cub.img_ea.img, &cub.img_ea.bpp, &cub.img_ea.sl, &cub.img_ea.en);
-	cub.img_we.i_adr = mlx_get_data_addr(cub.img_we.img, &cub.img_we.bpp, &cub.img_we.sl, &cub.img_we.en);
-	cub.img_s.i_adr = mlx_get_data_addr(cub.img_s.img, &cub.img_s.bpp, &cub.img_s.sl, &cub.img_s.en);
+    cub.scr.adr = mlx_get_data_addr(cub.scr.img, &cub.scr.bpp, &cub.scr.sl, &cub.scr.en);
+	cub.img_no.adr = mlx_get_data_addr(cub.img_no.img, &cub.img_no.bpp, &cub.img_no.sl, &cub.img_no.en);
+	cub.img_so.adr = mlx_get_data_addr(cub.img_so.img, &cub.img_so.bpp, &cub.img_so.sl, &cub.img_so.en);
+	cub.img_ea.adr = mlx_get_data_addr(cub.img_ea.img, &cub.img_ea.bpp, &cub.img_ea.sl, &cub.img_ea.en);
+	cub.img_we.adr = mlx_get_data_addr(cub.img_we.img, &cub.img_we.bpp, &cub.img_we.sl, &cub.img_we.en);
+	cub.img_s.adr = mlx_get_data_addr(cub.img_s.img, &cub.img_s.bpp, &cub.img_s.sl, &cub.img_s.en);
 	cub.fovh = M_PI / 3;
 	cub.fovv = cub.fovh * cub.map.screen_y / cub.map.screen_x;
 	return (cub);
 }
+
 void    display(t_map map)
 {
 	t_cub cub;

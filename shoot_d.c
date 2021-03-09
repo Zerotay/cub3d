@@ -53,7 +53,7 @@ t_cub	d_init(t_cub cub)
 	return (cub);
 }
 
-t_img shoot_d(t_cub cub, double deg, int ray)
+t_img shoot_d(t_cub cub, int ray)
 {
 	cub = d_init(cub);
 	while (1)

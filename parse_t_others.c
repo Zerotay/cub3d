@@ -18,10 +18,10 @@ t_map   fill_r(t_map map, char *line)
 		map.screen_y = map.screen_y * 10 + line[i++] - '0';
 	while (line[i] == ' ')
 		i++;
-	if (map.screen_x > 1440 || map.screen_x < 0)
-		map.screen_x = 1440;
-	if (map.screen_y > 900 || map.screen_y < 0)
-		map.screen_y = 900;
+	// if (map.screen_x > 1440 || map.screen_x < 0)
+	// 	map.screen_x = 1440;
+	// if (map.screen_y > 900 || map.screen_y < 0)
+	// 	map.screen_y = 900;
 	if (line[i] || !map.screen_x || !map.screen_y)
 		free_error(map);
 	return (map);

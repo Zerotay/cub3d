@@ -17,13 +17,13 @@ t_img singlelight(t_cub cub, int ray)
     if (!cub.spr)
         free_exit(cub);
 	if (cub.deg > 0 && cub.deg < M_PI_2)
-		return (shoot_a(cub, cub.deg, ray));
+		return (shoot_a(cub, ray));
 	if (cub.deg > M_PI_2 && cub.deg < M_PI)
-		return (shoot_b(cub, cub.deg, ray));
+		return (shoot_b(cub, ray));
 	if (cub.deg > M_PI && cub.deg < 3 * M_PI_2)
-		return (shoot_c(cub, cub.deg, ray));
+		return (shoot_c(cub, ray));
 	if (cub.deg > 3 * M_PI_2 && cub.deg < 2 * M_PI)
-		return (shoot_d(cub, cub.deg, ray));
+		return (shoot_d(cub, ray));
 	if (cub.deg == M_PI_2)
 		return (shoot_up(cub, ray));
 	if (cub.deg == M_PI)
@@ -38,7 +38,6 @@ t_img singlelight(t_cub cub, int ray)
 int gogo(t_cub *cub)
 {
 	int	ray;
-
 	if (cub->action & W)
 		*cub = move_forward(*cub);
 	if (cub->action & S)
@@ -55,5 +54,6 @@ int gogo(t_cub *cub)
 	while (++ray < cub->map.screen_x)
 		cub->scr = singlelight(*cub, ray);
     mlx_put_image_to_window(cub->mlx, cub->win, cub->scr.img, 0, 0);
+	mlx_do_sync(cub->mlx);
 	return (0);
 }

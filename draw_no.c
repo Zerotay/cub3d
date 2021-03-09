@@ -9,9 +9,9 @@ t_img	draw_no_wall(t_cub cub, int *i, int height, int ray)
 	tmp = top;
 	while ((*i)++ < height + tmp)
     {
-        cub.adr_y = (top - tmp) * cub.img_no.height / height;
-        cub.dst = cub.scr.i_adr + (top * cub.scr.sl + ray * (cub.scr.bpp / 8));
-        cub.srcs = cub.img_no.i_adr + (cub.adr_y * cub.img_no.sl + cub.adr_x * (cub.img_no.bpp / 8));
+        cub.ay = (top - tmp) * cub.img_no.height / height;
+        cub.dst = cub.scr.adr + (top * cub.scr.sl + ray * (cub.scr.bpp / 8));
+        cub.srcs = cub.img_no.adr + (cub.ay * cub.img_no.sl + cub.ax * (cub.img_no.bpp / 8));
         top++;
 		if (top <= 0)
         {
@@ -36,9 +36,9 @@ t_img   draw_no(t_cub cub, double x, double y, int ray)
     dist = hypot(x - cub.rx, y - cub.ry);
 	dist *= cos(cub.direction - cub.deg);
 	if (x < 0)
-		cub.adr_x = trunc((x - trunc(x)) * -1 * cub.img_no.width);
+		cub.ax = trunc((x - trunc(x)) * -1 * cub.img_no.width);
 	else
-		cub.adr_x = cub.img_no.width - trunc((x - trunc(x))* cub.img_no.width) - 1;
+		cub.ax = cub.img_no.width - trunc((x - trunc(x))* cub.img_no.width) - 1;
     wall_height = (int)(cub.map.screen_y / (2 * dist * tan(cub.fovv / 2)));
     top = (cub.map.screen_y / 2) - (wall_height / 2);
     i = top;

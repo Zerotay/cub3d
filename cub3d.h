@@ -76,7 +76,7 @@ typedef struct s_img
 	int bpp;
     int sl;
     int en;
-	char	*i_adr;
+	char	*adr;
 	int	height;
 	int	width;
 }				t_img;
@@ -118,8 +118,8 @@ typedef struct	s_cub
 // 색칠하기
 	char	*dst;
 	char	*srcs;
-	int		adr_x;
-	int		adr_y;
+	int		ax;
+	int		ay;
 	int		i;
 }				t_cub;
 
@@ -128,6 +128,7 @@ typedef struct	s_cub
 * px,py : position. coorndinate of player in entire map
 * rx,ry : real. exact location of player in 1*1 square
 * vx,vy : vim! nexux between ony ray and integer of graph
+* ax,ay : adress. adress of image
 * ft,gt : function of ray, and the inverse's (fucntion, gunction)
 */
 
@@ -161,10 +162,10 @@ t_img   draw_ea(t_cub cub, double x, double y, int ray);
 t_img   draw_so(t_cub cub, double x, double y, int ray);
 t_img   draw_we(t_cub cub, double x, double y, int ray);
 
-t_img shoot_d(t_cub cub, double deg, int ray);
-t_img shoot_c(t_cub cub, double deg, int ray);
-t_img shoot_b(t_cub cub, double deg, int ray);
-t_img shoot_a(t_cub cub, double deg, int ray);
+t_img shoot_d(t_cub cub, int ray);
+t_img shoot_c(t_cub cub, int ray);
+t_img shoot_b(t_cub cub, int ray);
+t_img shoot_a(t_cub cub, int ray);
 void	link_spr(t_cub cub);
 t_img shoot_up(t_cub cub, int ray);
 t_img shoot_left(t_cub cub, int ray);

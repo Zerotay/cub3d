@@ -26,7 +26,7 @@ t_cub	a_init(t_cub cub)
 	return (cub);
 }
 
-t_img shoot_a(t_cub cub, double deg, int ray)
+t_img shoot_a(t_cub cub, int ray)
 {
 	cub = a_init(cub);
 	while (1)
