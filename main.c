@@ -1,21 +1,5 @@
 #include "cub3d.h"
 
-void	free_all(t_map map)
-{
-	if (map.i_so)
-		free(map.i_so);
-	if (map.i_no)
-		free(map.i_no);
-	if (map.i_we)
-		free(map.i_we);
-	if (map.i_ea)
-		free(map.i_ea);
-	if (map.i_s)
-		free(map.i_s);
-	if (map.map)
-		ft_lstclear(&map.map, free);
-}
-
 int main(int gc, char **gv)
 {
 	t_map map;
@@ -33,9 +17,8 @@ int main(int gc, char **gv)
 	else
 	{
 		map = parse(gv[1], map);
-		printf("%c\n", map.m_flag); //이거 값부터 이상하게 들어가고 있다.
 		display(map);
-		free_all(map);
+		free_map(map);
 	}
 	return (0);
 }

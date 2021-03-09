@@ -24,12 +24,6 @@ t_map   map_init(t_map map)
 	return (map);
 }
 
-int		free_error(t_map map)
-{
-	printf("Error\n");
-	free_all(map);
-	exit(0);
-}
 
 t_map     parse(char *gv, t_map map)
 {
