@@ -12,6 +12,7 @@ void	link_spr(t_cub cub)
 	if (!scurr)
 	{
 		free(arr);
+		ft_lstclear(&cub.spr, free);
 		free_exit(cub);
 	}
 	ft_lstadd_back(&cub.spr, scurr);
