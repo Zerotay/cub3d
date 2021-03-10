@@ -6,7 +6,7 @@
 /*   By: dongguki <dongguki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 12:11:09 by dongguki          #+#    #+#             */
-/*   Updated: 2020/12/06 22:23:36 by dongguki         ###   ########.fr       */
+/*   Updated: 2021/03/10 09:43:07 by dongguki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	i = count(s, c);
-	if (!(ans = (char**)malloc(sizeof(char*) * (i + 1))))
+	ans = (char**)malloc(sizeof(char*) * (i + 1));
+	if (!ans)
 		return (0);
 	if (!make(s, c, ans, i))
 		return (0);

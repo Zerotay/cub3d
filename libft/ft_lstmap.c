@@ -6,7 +6,7 @@
 /*   By: dongguki <dongguki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 12:47:23 by dongguki          #+#    #+#             */
-/*   Updated: 2020/12/04 21:26:04 by dongguki         ###   ########.fr       */
+/*   Updated: 2021/03/10 09:40:09 by dongguki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list		*curr;
 	t_list		*ans;
 
-	if (!lst || !del || !(ans = ft_lstnew(f(lst->content))))
+	ans = ft_lstnew(f(lst->content));
+	if (!lst || !del || !ans)
 		return (0);
 	curr = ans;
 	lst = lst->next;
 	while (lst)
 	{
-		if (!(curr->next = ft_lstnew(f(lst->content))))
+		curr->next = ft_lstnew(f(lst->content));
+		if (!curr->next)
 		{
 			ft_lstclear(&ans, del);
 			return (0);

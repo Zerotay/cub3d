@@ -6,7 +6,7 @@
 /*   By: dongguki <dongguki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 20:06:56 by dongguki          #+#    #+#             */
-/*   Updated: 2020/12/06 17:24:34 by dongguki         ###   ########.fr       */
+/*   Updated: 2021/03/10 09:38:29 by dongguki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*al;
 
-	if (!(al = malloc(count * size)))
+	al = malloc(count * size);
+	if (!al)
 		return (0);
 	ft_bzero(al, count * size);
 	return (al);
