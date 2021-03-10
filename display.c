@@ -1,7 +1,6 @@
 #include "cub3d.h"
 
-
-t_cub   cub_init(t_cub cub)
+t_cub	cub_init(t_cub cub)
 {
 	cub.mlx = 0;
 	cub.win = 0;
@@ -70,13 +69,12 @@ t_cub	cub_setting(t_cub cub)
 	return (cub);
 }
 
-void    display(t_map map)
+void	display(t_map map)
 {
-	t_cub cub;
+	t_cub	cub;
 
 	cub.map = map;
 	cub = cub_setting(cub);
-
 	if (cub.map.m_flag == 'S')
 		cub.direction = 3 * M_PI_2;
 	else if (cub.map.m_flag == 'N')
@@ -85,7 +83,6 @@ void    display(t_map map)
 		cub.direction = 0;
 	else
 		cub.direction = M_PI;
-
 	mlx_hook(cub.win, 3, 0, keyrelease, &cub);
 	mlx_hook(cub.win, 2, 0, keypress, &cub);
 	mlx_hook(cub.win, 17, 0, clientclick, &cub);

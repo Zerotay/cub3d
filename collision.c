@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int is_xcollission(t_cub cub, double x)
+int		is_xcollission(t_cub cub, double x)
 {
 	t_list	*curr;
 
@@ -20,7 +20,7 @@ int is_xcollission(t_cub cub, double x)
 	return (0);
 }
 
-int is_ycollission(t_cub cub, double y)
+int		is_ycollission(t_cub cub, double y)
 {
 	t_list	*curr;
 

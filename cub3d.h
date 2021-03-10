@@ -25,12 +25,12 @@
 # define R	16
 # define L	32
 
-#define MOVING_SPEED	0.05
-#define MS				MOVING_SPEED
-#define COLLISION_RANGE	0.4
-#define	CR				COLLISION_RANGE
-#define	TURN_RATE		0.05
-#define	TR				TURN_RATE
+# define MOVING_SPEED	0.05
+# define MS				MOVING_SPEED
+# define COLLISION_RANGE	0.4
+# define CR				COLLISION_RANGE
+# define TURN_RATE		0.05
+# define TR				TURN_RATE
 
 
 /*
@@ -51,34 +51,33 @@
 	   |
 */
 
-typedef struct  s_map
+typedef struct	s_map
 {
-	unsigned char t_flag;
+	unsigned char	t_flag;
+	int				screen_x;
+	int				screen_y;
+	char			*i_no;
+	char			*i_so;
+	char			*i_ea;
+	char			*i_we;
+	char			*i_s;
+	int				c_floor;
+	int				c_ceiling;
+	char			m_flag;
+	t_list			*map;
+	int				px;
+	t_list			*py;
+}				t_map;
 
-	int		screen_x;
-	int		screen_y;
-	char	*i_no;
-	char	*i_so;
-	char	*i_ea;
-	char	*i_we;
-	char	*i_s;
-	int		c_floor;
-	int		c_ceiling;
-	char	m_flag;
-	t_list	*map;
-	int		px;
-	t_list	*py;
-}               t_map;
-
-typedef struct s_img
+typedef struct	s_img
 {
 	void	*img;
-	int bpp;
-    int sl;
-    int en;
+	int		bpp;
+    int		sl;
+    int		en;
 	char	*adr;
-	int	height;
-	int	width;
+	int		height;
+	int		width;
 }				t_img;
 
 
@@ -124,7 +123,7 @@ typedef struct	s_cub
 }				t_cub;
 
 /*
-* sx,sy : screen. width and height of screen 
+* sx,sy : screen. width and height of screen
 * px,py : position. coorndinate of player in entire map
 * rx,ry : real. exact location of player in 1*1 square
 * vx,vy : vim! nexux between ony ray and integer of graph
@@ -150,43 +149,43 @@ t_map	make_list(t_map map, int fd);
 t_map	parse_map(t_map map);
 
 void	display(t_map map);
-int gogo(t_cub *cub);
-t_img singlelight(t_cub cub, int ray);
+int		gogo(t_cub *cub);
+t_img	singlelight(t_cub cub, int ray);
 
 
 t_img	draw_spr(t_cub cub, int ray);
 t_img	draw_ceiling(t_cub cub, int ray, int top);
 t_img	draw_floor(t_cub cub, int ray, int i);
-t_img   draw_no(t_cub cub, double x, double y, int ray);
-t_img   draw_ea(t_cub cub, double x, double y, int ray);
-t_img   draw_so(t_cub cub, double x, double y, int ray);
-t_img   draw_we(t_cub cub, double x, double y, int ray);
+t_img	draw_no(t_cub cub, double x, double y, int ray);
+t_img	draw_ea(t_cub cub, double x, double y, int ray);
+t_img	draw_so(t_cub cub, double x, double y, int ray);
+t_img	draw_we(t_cub cub, double x, double y, int ray);
 
-t_img shoot_d(t_cub cub, int ray);
-t_img shoot_c(t_cub cub, int ray);
-t_img shoot_b(t_cub cub, int ray);
-t_img shoot_a(t_cub cub, int ray);
 void	link_spr(t_cub cub);
-t_img shoot_up(t_cub cub, int ray);
-t_img shoot_left(t_cub cub, int ray);
-t_img shoot_down(t_cub cub, int ray);
-t_img shoot_right(t_cub cub, int ray);
+t_img	shoot_d(t_cub cub, int ray);
+t_img	shoot_c(t_cub cub, int ray);
+t_img	shoot_b(t_cub cub, int ray);
+t_img	shoot_a(t_cub cub, int ray);
+t_img	shoot_up(t_cub cub, int ray);
+t_img	shoot_left(t_cub cub, int ray);
+t_img	shoot_down(t_cub cub, int ray);
+t_img	shoot_right(t_cub cub, int ray);
 
 
-t_cub move_forward(t_cub cub);
-t_cub move_backward(t_cub cub);
-t_cub move_left(t_cub cub);
-t_cub move_right(t_cub cub);
-int is_xcollission(t_cub cub, double x);
-int is_ycollission(t_cub cub, double y);
+t_cub	move_forward(t_cub cub);
+t_cub	move_backward(t_cub cub);
+t_cub	move_left(t_cub cub);
+t_cub	move_right(t_cub cub);
+int		is_xcollission(t_cub cub, double x);
+int		is_ycollission(t_cub cub, double y);
 
-int keyrelease(int keycode, t_cub *cub);
-int     keypress(int keycode, t_cub *cub);
+int		keyrelease(int keycode, t_cub *cub);
+int		keypress(int keycode, t_cub *cub);
 int		clientclick(t_cub *cub);
 
 
 void	free_exit(t_cub cub);
-void    free_mlx(t_cub cub);
+void	free_mlx(t_cub cub);
 void	free_map(t_map map);
 int		free_error(t_map map);
 
