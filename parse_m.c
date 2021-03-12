@@ -23,26 +23,34 @@ t_map	make_list(t_map map, int fd)
 	ft_lstadd_back(&map.map, tmp);
 	if (!ft_strset(line, "102 NEWS") || ret < 0)
 		free_error(map);
-	return(map);
+	return (map);
 }
 
 void	error_if_invalid(t_map map, int i, t_list *tmp)
 {
 	if (!tmp->prev || !tmp->next || !tmp->prev->content)
 		free_error(map);
-	if (!i || *((char *)tmp->content + i - 1) == ' ' || !*((char *)tmp->content + i + 1) || *((char *)tmp->content + i + 1) == ' ')
+	if (!i || *((char *)tmp->content + i - 1) == ' ' \
+		 || !*((char *)tmp->content + i + 1) \
+		 || *((char *)tmp->content + i + 1) == ' ')
 		free_error(map);
-	if ((int)ft_strlen((char *)tmp->prev->content) < i + 1 || *((char *)tmp->prev->content + i) == ' ')
+	if ((int)ft_strlen((char *)tmp->prev->content) < i + 1 \
+		 || *((char *)tmp->prev->content + i) == ' ')
 		free_error(map);
-	if ((int)ft_strlen((char *)tmp->next->content) < i + 1 || *((char *)tmp->next->content + i) == ' ')
+	if ((int)ft_strlen((char *)tmp->next->content) < i + 1 \
+		 || *((char *)tmp->next->content + i) == ' ')
 		free_error(map);
 }
 
 t_map	check_map_valid(t_map map, int i, t_list *tmp)
 {
-	if (*((char *)tmp->content + i) == '0' || *((char *)tmp->content + i) == '2')
+	if (*((char *)tmp->content + i) == '0' \
+		 || *((char *)tmp->content + i) == '2')
 		error_if_invalid(map, i, tmp);
-	if (*((char *)tmp->content + i) == 'N' || *((char *)tmp->content + i) == 'E' || *((char *)tmp->content + i) == 'W' || *((char *)tmp->content + i) == 'S')
+	if (*((char *)tmp->content + i) == 'N' \
+		 || *((char *)tmp->content + i) == 'E' \
+		 || *((char *)tmp->content + i) == 'W' \
+		 || *((char *)tmp->content + i) == 'S')
 	{
 		if (map.m_flag)
 			free_error(map);

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void    free_mlx(t_cub cub)
+void	free_mlx(t_cub cub)
 {
 	if (cub.img_ea.img)
 		mlx_destroy_image(cub.mlx, cub.img_ea.img);
@@ -46,8 +46,7 @@ void	free_map(t_map map)
 	map.i_we = 0;
 }
 
-
-int		free_error(t_map map)
+int	free_error(t_map map)
 {
 	printf("Error\n");
 	free_map(map);

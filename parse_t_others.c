@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-t_map   fill_r(t_map map, char *line)
+t_map	fill_r(t_map map, char *line)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (map.t_flag & IS_R)
@@ -11,23 +11,19 @@ t_map   fill_r(t_map map, char *line)
 	while (line[i] == ' ')
 		i++;
 	while (line[i] >= '0' && line[i] <= '9')
-		map.screen_x = map.screen_x * 10 + line[i++] - '0';
+		map.sx = map.sx * 10 + line[i++] - '0';
 	while (line[i] == ' ')
 		i++;
 	while (line[i] >= '0' && line[i] <= '9')
-		map.screen_y = map.screen_y * 10 + line[i++] - '0';
+		map.sy = map.sy * 10 + line[i++] - '0';
 	while (line[i] == ' ')
 		i++;
-	// if (map.screen_x > 1440 || map.screen_x < 0)
-	// 	map.screen_x = 1440;
-	// if (map.screen_y > 900 || map.screen_y < 0)
-	// 	map.screen_y = 900;
-	if (line[i] || !map.screen_x || !map.screen_y)
+	if (line[i] || !map.sx || !map.sy)
 		free_error(map);
 	return (map);
 }
 
-int save_color(char *line, int *i, int *tmp, int *var)
+int	save_color(char *line, int *i, int *tmp, int *var)
 {
 	int	check;
 
@@ -51,8 +47,8 @@ int save_color(char *line, int *i, int *tmp, int *var)
 t_map	fill_f(t_map map, char *line)
 {
 	int	i;
-	int tmp;
-	int check;
+	int	tmp;
+	int	check;
 
 	i = 1;
 	tmp = 0;
@@ -79,8 +75,8 @@ t_map	fill_f(t_map map, char *line)
 t_map	fill_c(t_map map, char *line)
 {
 	int	i;
-	int tmp;
-	int check;
+	int	tmp;
+	int	check;
 
 	i = 1;
 	tmp = 0;

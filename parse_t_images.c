@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-t_map   fill_no(t_map map, char *line)
+t_map	fill_no(t_map map, char *line)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	if (map.t_flag & IS_NO)
 		free_error(map);
@@ -25,10 +25,10 @@ t_map   fill_no(t_map map, char *line)
 	return (map);
 }
 
-t_map   fill_so(t_map map, char *line)
+t_map	fill_so(t_map map, char *line)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	if (map.t_flag & IS_SO)
 		free_error(map);
@@ -50,10 +50,10 @@ t_map   fill_so(t_map map, char *line)
 	return (map);
 }
 
-t_map   fill_we(t_map map, char *line)
+t_map	fill_we(t_map map, char *line)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	if (map.t_flag & IS_WE)
 		free_error(map);
@@ -75,10 +75,10 @@ t_map   fill_we(t_map map, char *line)
 	return (map);
 }
 
-t_map   fill_ea(t_map map, char *line)
+t_map	fill_ea(t_map map, char *line)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	if (map.t_flag & IS_EA)
 		free_error(map);
@@ -100,10 +100,10 @@ t_map   fill_ea(t_map map, char *line)
 	return (map);
 }
 
-t_map   fill_s(t_map map, char *line)
+t_map	fill_s(t_map map, char *line)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	if (map.t_flag & IS_S)
 		free_error(map);

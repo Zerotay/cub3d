@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_map   check_type(t_map map, char *line)
+t_map	check_type(t_map map, char *line)
 {
 	if (line[0] == 'R')
 		return (fill_r(map, line));
@@ -15,9 +15,9 @@ t_map   check_type(t_map map, char *line)
 	if (line[0] == 'S')
 		return (fill_s(map, line));
 	if (line[0] == 'F')
-	    return (fill_f(map, line));
+		return (fill_f(map, line));
 	if (line[0] == 'C')
-	    return (fill_c(map, line));
+		return (fill_c(map, line));
 	if (line[0] == '\0')
 		return (map);
 	free_error(map);

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static void		recur(int num, int fd)
+static void	recur(int num, int fd)
 {
 	char		i;
 
@@ -24,7 +24,7 @@ static void		recur(int num, int fd)
 	ft_putchar_fd(i, fd);
 }
 
-void			ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
 	{

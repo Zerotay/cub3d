@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-static int			ft_isspace(char c)
+static int	ft_isspace(char c)
 {
-	return ((c == '\n') || (c == '\v') ||
-			(c == '\t') || (c == '\f') ||
+	return ((c == '\n') || (c == '\v') || \
+			(c == '\t') || (c == '\f') || \
 			(c == ' ') || (c == '\r'));
 }
 
-static void			ft_pass(const char *str, size_t *i, int *sign)
+static void	ft_pass(const char *str, size_t *i, int *sign)
 {
 	if (str[*i] == '-' || str[*i] == '+')
 	{
@@ -31,7 +31,7 @@ static void			ft_pass(const char *str, size_t *i, int *sign)
 		(*i)++;
 }
 
-int					ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	size_t				i;
 	int					sign;

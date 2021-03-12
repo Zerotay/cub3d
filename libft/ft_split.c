@@ -24,7 +24,7 @@ static size_t	count(char const *s, char c)
 		if (s[i] == c)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		while (s[i] != c && s[i])
 			i++;
@@ -33,9 +33,9 @@ static size_t	count(char const *s, char c)
 	return (j);
 }
 
-static void		stop(char **ans, size_t i)
+static void	stop(char **ans, size_t i)
 {
-	size_t j;
+	size_t	j;
 
 	j = -1;
 	while (++j < i)
@@ -43,7 +43,7 @@ static void		stop(char **ans, size_t i)
 	free(ans);
 }
 
-static char			**make(char const *s, char c, char **ans, size_t wc)
+static char	**make(char const *s, char c, char **ans, size_t wc)
 {
 	size_t		i;
 	size_t		j;
@@ -71,7 +71,7 @@ static char			**make(char const *s, char c, char **ans, size_t wc)
 	return (ans);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char		**ans;
 	size_t		i;
@@ -79,7 +79,7 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	i = count(s, c);
-	ans = (char**)malloc(sizeof(char*) * (i + 1));
+	ans = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!ans)
 		return (0);
 	if (!make(s, c, ans, i))

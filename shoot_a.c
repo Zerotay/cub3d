@@ -26,19 +26,18 @@ t_cub	a_init(t_cub cub)
 	return (cub);
 }
 
-t_img shoot_a(t_cub cub, int ray)
+t_img	shoot_a(t_cub cub, int ray)
 {
 	cub = a_init(cub);
 	while (1)
 	{
 		cub.ft = tan(cub.deg) * (cub.vx - cub.rx) + cub.ry;
 		cub.gt = (1 / tan(cub.deg)) * (cub.vy - cub.ry) + cub.rx;
-
 		if (hypot(cub.vx, cub.ft) < hypot(cub.vy, cub.gt))
 		{
 			if (*((char *)cub.curr->content + cub.map.px + cub.vx) == '1')
 				return (draw_we(cub, cub.vx, cub.ft, ray));
-			else if (*((char *)cub.curr->content + cub.map.px + cub.vx) == '2')
+			if (*((char *)cub.curr->content + cub.map.px + cub.vx) == '2')
 				a_we_spr(cub);
 			cub.vx++;
 		}
@@ -47,7 +46,8 @@ t_img shoot_a(t_cub cub, int ray)
 			cub.curr = cub.curr->prev;
 			if (*((char *)cub.curr->content + cub.map.px + cub.vx - 1) == '1')
 				return (draw_so(cub, cub.gt, cub.vy, ray));
-			else if (*((char *)cub.curr->content + cub.map.px + cub.vx - 1) == '2')
+			if (*((char *)cub.curr->content + \
+					cub.map.px + cub.vx - 1) == '2')
 				a_so_spr(cub);
 			cub.vy++;
 		}

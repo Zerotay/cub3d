@@ -25,7 +25,7 @@ t_cub	stabilize_position(t_cub cub)
 	return (cub);
 }
 
-t_cub move_forward(t_cub cub)
+t_cub	move_forward(t_cub cub)
 {
 	if (!is_xcollission(cub, cub.rx + MS * cos(cub.direction)))
 		cub.rx += MS * cos(cub.direction);
@@ -35,7 +35,7 @@ t_cub move_forward(t_cub cub)
 	return (cub);
 }
 
-t_cub move_backward(t_cub cub)
+t_cub	move_backward(t_cub cub)
 {
 	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction)))
 		cub.rx -= MS * cos(cub.direction);
@@ -45,7 +45,7 @@ t_cub move_backward(t_cub cub)
 	return (cub);
 }
 
-t_cub move_left(t_cub cub)
+t_cub	move_left(t_cub cub)
 {
 	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction - M_PI_2)))
 		cub.rx -= MS * cos(cub.direction - M_PI_2);
@@ -55,7 +55,7 @@ t_cub move_left(t_cub cub)
 	return (cub);
 }
 
-t_cub move_right(t_cub cub)
+t_cub	move_right(t_cub cub)
 {
 	if (!is_xcollission(cub, cub.rx - MS * cos(cub.direction + M_PI_2)))
 		cub.rx -= MS * cos(cub.direction + M_PI_2);

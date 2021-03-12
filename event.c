@@ -1,12 +1,12 @@
 #include "cub3d.h"
 
-int		clientclick(t_cub *cub)
+int	clientclick(t_cub *cub)
 {
 	free_exit(*cub);
 	return (0);
 }
 
-int		keypress(int keycode, t_cub *cub)
+int	keypress(int keycode, t_cub *cub)
 {
 	if (keycode == 53)
 		free_exit(*cub);
@@ -25,7 +25,7 @@ int		keypress(int keycode, t_cub *cub)
 	return (0);
 }
 
-int		keyrelease(int keycode, t_cub *cub)
+int	keyrelease(int keycode, t_cub *cub)
 {
 	if (keycode == 123)
 		cub->action ^= L;

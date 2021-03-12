@@ -1,12 +1,12 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdio.h>
-#include "./libft/libft.h"
-#include "./get_next_line/get_next_line.h"
-#include <fcntl.h>
-#include "mlx.h"
-#include <math.h>
+# include <stdio.h>
+# include "./libft/libft.h"
+# include "./get_next_line/get_next_line.h"
+# include <fcntl.h>
+# include "mlx.h"
+# include <math.h>
 
 # define IS_R 128
 # define IS_NO 64
@@ -32,30 +32,11 @@
 # define TURN_RATE		0.05
 # define TR				TURN_RATE
 
-
-/*
-   \ C | B /
-    \  |  /
- D   \ | /   A
-  -----------       X
- E   / | \   H
-    /  |  \
-   / F | G \
-
-       |
-   B   |   A
-	   |
----------------    O
-       |
-   C   |   D
-	   |
-*/
-
-typedef struct	s_map
+typedef struct s_map
 {
 	unsigned char	t_flag;
-	int				screen_x;
-	int				screen_y;
+	int				sx;
+	int				sy;
 	char			*i_no;
 	char			*i_so;
 	char			*i_ea;
@@ -69,19 +50,18 @@ typedef struct	s_map
 	t_list			*py;
 }				t_map;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img;
 	int		bpp;
-    int		sl;
-    int		en;
+	int		sl;
+	int		en;
 	char	*adr;
 	int		height;
 	int		width;
 }				t_img;
 
-
-typedef struct	s_cub
+typedef struct s_cub
 {
 	t_map	map;
 	void	*mlx;
@@ -97,7 +77,6 @@ typedef struct	s_cub
 	double	fovv;
 	char	action;
 
-// 빛쏘기
 	double	direction;
 	double	deg;
 	double	rx;
@@ -108,13 +87,11 @@ typedef struct	s_cub
 	int		vy;
 	t_list	*curr;
 
-// 스프라이트 관련
 	t_list	*spr;
 	double	mid;
 	double	edge;
 	double	dist;
 
-// 색칠하기
 	char	*dst;
 	char	*srcs;
 	int		ax;
@@ -131,7 +108,7 @@ typedef struct	s_cub
 * ft,gt : function of ray, and the inverse's (fucntion, gunction)
 */
 
-
+t_map	map_init(t_map map);
 t_map	parse(char *gv, t_map map);
 
 t_map	parse_type(t_map map, int fd);
@@ -151,7 +128,8 @@ t_map	parse_map(t_map map);
 void	display(t_map map);
 int		gogo(t_cub *cub);
 t_img	singlelight(t_cub cub, int ray);
-
+t_cub	cub_setting(t_cub cub);
+t_cub	cub_init(t_cub cub);
 
 t_img	draw_spr(t_cub cub, int ray);
 t_img	draw_ceiling(t_cub cub, int ray, int top);
@@ -171,7 +149,6 @@ t_img	shoot_left(t_cub cub, int ray);
 t_img	shoot_down(t_cub cub, int ray);
 t_img	shoot_right(t_cub cub, int ray);
 
-
 t_cub	move_forward(t_cub cub);
 t_cub	move_backward(t_cub cub);
 t_cub	move_left(t_cub cub);
@@ -183,12 +160,11 @@ int		keyrelease(int keycode, t_cub *cub);
 int		keypress(int keycode, t_cub *cub);
 int		clientclick(t_cub *cub);
 
-
 void	free_exit(t_cub cub);
 void	free_mlx(t_cub cub);
 void	free_map(t_map map);
 int		free_error(t_map map);
 
-
+int		make_bmp(char *gv);
 
 #endif
