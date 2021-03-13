@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongguki <dongguki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 11:54:06 by dongguki          #+#    #+#             */
+/*   Updated: 2021/03/13 13:27:29 by dongguki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_map	map_init(t_map map)
@@ -33,8 +45,8 @@ t_cub	cub_init(t_cub cub)
 	cub.img_s.img = 0;
 	cub.img_no.img = 0;
 	cub.img_so.img = 0;
-	cub.rx = 0.5;
-	cub.ry = 0.5;
+	cub.rx = X;
+	cub.ry = Y;
 	cub.action = 0;
 	cub.spr = 0;
 	return (cub);

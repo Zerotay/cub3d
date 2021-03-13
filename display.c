@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongguki <dongguki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 11:53:33 by dongguki          #+#    #+#             */
+/*   Updated: 2021/03/13 12:09:17 by dongguki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_cub	size_direction(t_cub cub)
@@ -60,6 +72,7 @@ t_cub	load_mlx_1(t_cub cub)
 t_cub	cub_setting(t_cub cub)
 {
 	cub = cub_init(cub);
+	cub = size_direction(cub);
 	cub = load_mlx_1(cub);
 	cub = load_mlx_2(cub);
 	cub.scr.adr = mlx_get_data_addr(cub.scr.img, \
@@ -76,7 +89,6 @@ t_cub	cub_setting(t_cub cub)
 				&cub.img_s.bpp, &cub.img_s.sl, &cub.img_s.en);
 	cub.fovh = M_PI / 3;
 	cub.fovv = cub.fovh * cub.map.sy / cub.map.sx;
-	cub = size_direction(cub);
 	return (cub);
 }
 

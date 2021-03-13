@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongguki <dongguki@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/13 11:53:29 by dongguki          #+#    #+#             */
+/*   Updated: 2021/03/13 13:49:31 by dongguki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -31,6 +43,12 @@
 # define CR				COLLISION_RANGE
 # define TURN_RATE		0.05
 # define TR				TURN_RATE
+# define REAL_X_POSITIOM	0.5
+# define REAL_Y_POSITIOM	0.0
+# define X				REAL_X_POSITIOM
+# define Y				REAL_X_POSITIOM
+
+
 
 typedef struct s_map
 {
