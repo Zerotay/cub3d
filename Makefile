@@ -12,7 +12,7 @@ all: $(NAME)
 $(NAME) :
 	gcc ./*.c ./get_next_line/*.c -o $@ -Wall -Wextra -Werror \
 	-L. -lft -I./libft -I./get_next_line -I. -lm \
-	-L. -lmlx -framework OpenGL -framework AppKit -lz -fsanitize=address
+	-L. -lmlx -framework Opengl -framework AppKit -lz -fsanitize=address
 	./cub3d ./test.cub
 	rm cub3d
 

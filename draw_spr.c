@@ -6,7 +6,7 @@
 /*   By: dongguki <dongguki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 11:53:48 by dongguki          #+#    #+#             */
-/*   Updated: 2021/03/13 16:12:46 by dongguki         ###   ########.fr       */
+/*   Updated: 2021/05/21 13:41:42 by dongguki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ t_img	single_spr(t_cub cub, int ray, t_list *curr)
 	temp = top;
 	while (++cub.i < *((int *)curr->content + 1))
 	{
-		if (++top <= 0 || temp + cub.i >= cub.map.sy)
+		if (++top < 0 || temp + cub.i > cub.map.sy - 2)
 			continue ;
 		cub.ay = (cub.i * cub.img_s.height / *((int *)curr->content + 1));
 		cub.dst = top * cub.scr.sl + ray * (cub.scr.bpp / 8) + cub.scr.adr;
 		cub.srcs = cub.ay * cub.img_s.sl \
 					 + cub.ax * (cub.img_s.bpp / 8) + cub.img_s.adr;
-		// printf("dest : %p, xy : %d %d  srcs : %p xy : %d %d \n", cub.dst, top, ray, cub.srcs, cub.ax, cub.ay);
+		// printf("dest : %p, xy : %d %d  srcs : %p xy : %d %d \n", cub.dst, ray, top, cub.srcs, cub.ax, cub.ay);
 		if (*(unsigned int *)cub.srcs <= 0x00ffffff)
 			*(unsigned int *)cub.dst = *(unsigned int *)cub.srcs;
 	}

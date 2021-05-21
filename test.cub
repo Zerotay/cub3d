@@ -1,4 +1,4 @@
-R 720 480
+R 480 360
 NO ./images/dirt_full.xpm
 SO ./images/slime0.xpm
 EA ./images/bog_green3.xpm
